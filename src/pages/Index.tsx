@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { Zap, Star, Check } from "lucide-react";
+import { Zap, Star, Check, WandSparkles } from "lucide-react";
 
 const Index = () => {
   return (
@@ -49,9 +49,31 @@ const Index = () => {
             Start the Journey
           </Link>
         </div>
+        {/* Creator Invitation Section */}
+        <div className="mt-10 w-full max-w-xl bg-cloud-blue/90 rounded-2xl shadow-md border border-blush-peach flex flex-col items-center p-7 gap-4 animate-fade-in-slow">
+          <div className="flex items-center gap-3 mb-2">
+            <WandSparkles className="text-soul-purple" size={26} />
+            <span className="font-playfair text-xl font-bold text-soul-purple">
+              For Creators & Dreamers
+            </span>
+          </div>
+          <p className="text-charcoal-soft text-center text-base">
+            Want to inspire your audience with a soulful discovery experience?
+            <br />
+            Craft your own <span className="font-semibold text-soul-purple">Soul Country Map</span> quiz with our locked template—designed for beautiful style and unique, emotional outcomes.
+          </p>
+          <Link
+            to="#"
+            className="mt-2 px-7 py-3 bg-soul-purple text-white rounded-full font-bold shadow hover:bg-lavender-mist transition text-base"
+            aria-label="Are you a creator? Build your own Soul Country Map for your followers."
+          >
+            Are you a creator? Build your own Soul Country Map for your followers.
+          </Link>
+        </div>
       </div>
     </div>
   );
 };
 
 export default Index;
+
