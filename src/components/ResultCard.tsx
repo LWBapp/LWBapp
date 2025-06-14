@@ -1,4 +1,3 @@
-
 import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import SocialShareCard from "@/components/SocialShareCard";
@@ -11,6 +10,7 @@ import html2canvas from "html2canvas";
 import { EmailModal } from "./EmailModal";
 import { toast } from "@/hooks/use-toast";
 import ShareButtons from "@/components/ShareButtons";
+import SoulCountryResult from "./SoulCountryResult";
 
 type Props = {
   country: string;
@@ -108,21 +108,40 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
   // --- Add this teaser for sharing (can be customized or maybe made dynamic) ---
   const teaser = "Where foggy cliffs meet quiet healing…";
 
+  // For this version, you can pass "fitBullets" manually or infer
+  // Example: fitBullets for Portugal, otherwise leave empty
+  let fitBullets: string[] = [];
+  if (country.toLowerCase() === "portugal") {
+    fitBullets = [
+      "You said you’re seeking peace and spaciousness.",
+      "You feel most alive near the ocean or in quiet towns.",
+      "You thrive around warm, grounded people.",
+    ];
+  }
+
+  // Optionally: A subtle CTA button
+  const cta = {
+    text: "Get My City Matches",
+    onClick: () => {
+      // For demo, could open a not-yet-implemented modal or alert
+      toast({
+        title: "Coming soon!",
+        description: `We'll send you soulful places to explore in ${country}.`,
+        variant: "default"
+      });
+    }
+  };
+
   return (
     <div className="bg-white/95 rounded-2xl shadow-2xl border border-blush-peach px-8 py-14 flex flex-col items-center gap-6 animate-fadeIn">
-      {/* Country name in bold, description underneath */}
-      <div className="w-full text-center mb-4">
-        {country && (
-          <div className="text-3xl md:text-4xl font-playfair font-bold text-soul-purple mb-1">
-            {country}
-          </div>
-        )}
-        {description && (
-          <div className="text-lg text-charcoal mt-2">
-            {description}
-          </div>
-        )}
-      </div>
+      {/* -- Soul Country Hero Output -- */}
+      <SoulCountryResult
+        country={country}
+        description={description}
+        fitBullets={fitBullets}
+        cta={cta}
+      />
+
       {/* --- NEW: Social Sharing Buttons --- */}
       <ShareButtons country={country} teaser={teaser} />
 
