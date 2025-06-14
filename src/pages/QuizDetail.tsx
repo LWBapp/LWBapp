@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useParams } from "react-router-dom";
 import CountryChaosQuizForm from "@/components/CountryChaosQuizForm";
@@ -6,6 +5,7 @@ import RomanticCityQuizForm from "@/components/romantic-city/RomanticCityQuizFor
 import DeluluDestinationQuizForm from "@/components/delulu-destination/DeluluDestinationQuizForm";
 import MusicVibeQuizForm from "@/components/music-vibe/MusicVibeQuizForm";
 import MoodMapQuizForm from "@/components/mood-map/MoodMapQuizForm";
+import TravelEmojiQuizForm from "@/components/travel-emoji/TravelEmojiQuizForm";
 
 const QUIZ_DATA: Record<
   string,
@@ -40,6 +40,11 @@ const QUIZ_DATA: Record<
     title: "Your Instant Mood-to-City Map",
     subtitle: "Pick your mood, meet your city! Direct, quirky, visually driven fast match.",
     description: "One-question quiz: What’s your vibe right now? Get a city as your instant mood match, plus a punchy, personalized description!",
+  },
+  "travel-emoji": {
+    title: "Which Travel Emoji = Your Next City?",
+    subtitle: "Pick emojis to match your mood—and see which destination it unlocks.",
+    description: "3 quick emoji picks = your travel energy in city form! Will you get Paris, Tokyo, Bali, or somewhere else? Pick brain, heart, and energy vibes to reveal your destination.",
   },
 };
 
@@ -84,6 +89,10 @@ const QuizDetail: React.FC = () => {
           ) : quizId === "mood-map" ? (
             <div className="w-full max-w-xl">
               <MoodMapQuizForm />
+            </div>
+          ) : quizId === "travel-emoji" ? (
+            <div className="w-full max-w-xl">
+              <TravelEmojiQuizForm />
             </div>
           ) : (
             <p className="italic text-gray-400">[Quiz content coming soon!]</p>

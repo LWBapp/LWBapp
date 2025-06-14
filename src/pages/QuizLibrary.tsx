@@ -1,4 +1,3 @@
-
 import React from "react";
 import QuizCard from "@/components/QuizCard";
 
@@ -32,6 +31,11 @@ const quizzes = [
     id: "mood-map",
     title: "Your Instant Mood-to-City Map",
     subtitle: "Pick your mood, meet your city! Direct, quirky, visual fast match.",
+  },
+  {
+    id: "travel-emoji",
+    title: "Which Travel Emoji = Your Next City?",
+    subtitle: "Pick emojis to match your mood—and see which destination it unlocks.",
   },
 ];
 
