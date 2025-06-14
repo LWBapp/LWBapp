@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ResultCard } from "@/components/ResultCard";
@@ -81,15 +82,15 @@ const Result = () => {
   }
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-ocean-light via-blush-light to-honey-light">
+    <div className="min-h-screen w-full flex items-center justify-center bg-lwb-primary-gradient">
       <div className="w-full max-w-2xl mx-auto px-6 py-16 flex flex-col items-center">
         {loading ? (
-          <div className="bg-white/90 rounded-2xl shadow-2xl border border-muted px-8 py-16 flex flex-col items-center gap-6 animate-fadeIn">
-            <Loader2 className="animate-spin text-lavender-dark mb-4" size={48} />
-            <h2 className="text-xl font-playfair font-semibold text-gray-900 text-center">
+          <div className="bg-white/90 rounded-2xl shadow-2xl border border-blush-peach px-8 py-16 flex flex-col items-center gap-6 animate-fadeIn">
+            <Loader2 className="animate-spin text-soul-purple mb-4" size={48} />
+            <h2 className="text-xl font-playfair font-semibold text-charcoal-line text-center">
               Opening the map of your soul...
             </h2>
-            <p className="text-gray-600 text-center">
+            <p className="text-charcoal-soft text-center">
               Listening for the country's call. One moment.
             </p>
           </div>

@@ -1,3 +1,4 @@
+
 import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import SocialShareCard from "@/components/SocialShareCard";
@@ -108,16 +109,16 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
   const teaser = "Where foggy cliffs meet quiet healing…";
 
   return (
-    <div className="bg-white/95 rounded-2xl shadow-2xl border border-honey-dark px-8 py-14 flex flex-col items-center gap-6 animate-fadeIn">
+    <div className="bg-white/95 rounded-2xl shadow-2xl border border-blush-peach px-8 py-14 flex flex-col items-center gap-6 animate-fadeIn">
       {/* Country name in bold, description underneath */}
       <div className="w-full text-center mb-4">
         {country && (
-          <div className="text-3xl md:text-4xl font-playfair font-bold text-honey-dark mb-1">
+          <div className="text-3xl md:text-4xl font-playfair font-bold text-soul-purple mb-1">
             {country}
           </div>
         )}
         {description && (
-          <div className="text-lg text-gray-700 mt-2">
+          <div className="text-lg text-charcoal mt-2">
             {description}
           </div>
         )}
@@ -170,20 +171,20 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
 
       {/* SOULMAP UTILITIES SECTION */}
       <div className="mt-7 w-full flex flex-col items-center">
-        <div className="text-xl font-playfair text-ocean-dark font-bold mb-3 flex items-center gap-2">
+        <div className="text-xl font-playfair text-soul-purple font-bold mb-3 flex items-center gap-2">
           <span role="img" aria-label="note">📝</span> Keep Your Soulmap
         </div>
         <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
           <Button
             onClick={handleDownloadPDF}
-            className="px-4 py-2 bg-ocean-dark text-white rounded-full font-bold shadow transition flex items-center gap-2 justify-center"
+            className="px-4 py-2 bg-cloud-blue text-charcoal-line rounded-full font-bold shadow transition flex items-center gap-2 justify-center hover:bg-peach-puff"
             size="lg"
           >
             <Download size={18} /> Download as PDF
           </Button>
           <Button
             onClick={() => setEmailModalOpen(true)}
-            className="px-4 py-2 bg-honey-dark text-white rounded-full font-bold shadow transition flex items-center gap-2 justify-center"
+            className="px-4 py-2 bg-soul-purple text-white rounded-full font-bold shadow transition flex items-center gap-2 justify-center hover:bg-lavender-mist"
             size="lg"
           >
             <Mail size={18} /> Email Me This Result
@@ -191,12 +192,12 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
         </div>
       </div>
 
-      <div className="text-xs text-gray-400 text-center mt-2">
+      <div className="text-xs text-charcoal-soft text-center mt-2">
         Download or email yourself your soulmap as a beautiful keepsake.
       </div>
       <Button
         variant="outline"
-        className="mt-6 w-full py-3 rounded-full border-honey-dark text-honey-dark font-semibold text-md hover:bg-honey-light transition"
+        className="mt-6 w-full py-3 rounded-full border-soul-purple text-soul-purple font-semibold text-md hover:bg-peach-puff transition"
         onClick={handleFindAnother}
         size="lg"
         type="button"
@@ -214,3 +215,5 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
     </div>
   );
 };
+
+// The file is >200 lines. Consider refactoring this component into modular parts for better maintainability.
