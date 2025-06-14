@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useParams } from "react-router-dom";
 import CountryChaosQuizForm from "@/components/CountryChaosQuizForm";
@@ -19,11 +20,7 @@ const QUIZ_DATA: Record<
     subtitle: "A witty, self-deprecating personality quiz for beautifully unhinged souls.",
     description: "Are you as wild as a Brazilian carnival or as serene as a Swiss alp? Take the quiz and find out!",
   },
-  "introvert-vs-adventurer": {
-    title: "Introvert or Adventurer?",
-    subtitle: "Discover your travel alter-ego with this snappy personality test.",
-    description: "Is your soul craving a book by the fire or an offbeat adventure?",
-  },
+  // Removed "introvert-vs-adventurer"
   "romantic-city": {
     title: "Where Would You Fall Madly in Love (With Life)?",
     subtitle: "A dreamy, poetic quiz to reveal your cinematic life city.",
@@ -137,3 +134,4 @@ const QuizDetail: React.FC = () => {
 };
 
 export default QuizDetail;
+

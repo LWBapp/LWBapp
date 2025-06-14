@@ -8,11 +8,6 @@ const quizzes = [
     subtitle: "A witty, self-deprecating personality quiz for beautifully unhinged souls.",
   },
   {
-    id: "introvert-vs-adventurer",
-    title: "Introvert or Adventurer?",
-    subtitle: "Discover your travel alter-ego with this snappy personality test.",
-  },
-  {
     id: "romantic-city",
     title: "Where Would You Fall Madly in Love (With Life)?",
     subtitle: "A dreamy, poetic quiz to reveal your cinematic life city.",
