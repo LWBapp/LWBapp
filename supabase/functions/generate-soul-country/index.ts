@@ -18,8 +18,22 @@ serve(async (req) => {
   try {
     const { form } = await req.json();
 
-    // Compose prompt
-    const prompt = `You are a soulful travel guide who maps people's emotional seasons to the energy of countries. Your answers are poetic, intuitive, and emotionally resonant. Based on the following inputs: Craving: ${form.craving}, Feelings: ${form.feelings?.join(", ")}, Imagery: ${form.scenes?.join(", ")}, Emotional Season: ${form.emotional_season}, Place Type: ${form.place_type}, suggest one country that matches their emotional season and describe why, using poetic tone.`;
+    // Compose prompt - updated to be easier to read and follow the new structure
+    const prompt = `You are a seasoned, soulful travel guide. Given the following quiz answers, suggest one (and only one) world country for the person's "soul country." 
+
+Format your response like this, on separate lines:
+
+Country Name
+
+A creative, vivid, and inviting 2-3 paragraph explanation of why this country matches their energy right now. Write clearly, with structure and fresh details—more uplifting, less poetic—so it's really easy for someone to read, share, and feel inspired. Keep sentences concise and use simple language.
+
+Here are the answers: 
+Craving: ${form.craving}
+Feelings: ${form.feelings?.join(", ")}
+Imagery: ${form.scenes?.join(", ")}
+Emotional Season: ${form.emotional_season}
+Place Type: ${form.place_type}
+`;
 
     const openAIRes = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -32,7 +46,7 @@ serve(async (req) => {
         messages: [
           {
             role: "system",
-            content: "Be soulful, emotionally intuitive, and poetic. Suggest a single world country only, then explain why in a sensitive, evocative, beautiful way."
+            content: "Your job is to recommend a single country (as a heading on the first line), then provide a clear, organized, uplifting, and creative explanation (2-3 paragraphs) for your choice. Your explanations are easy to read and upbeat, rather than overly poetic or abstract. Always start with the country name as the first line title, followed by a blank line, then the rest."
           },
           {
             role: "user",
