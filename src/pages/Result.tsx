@@ -9,6 +9,9 @@ import { saveSoulmap } from "@/utils/soulmapStorage";
 // Supabase Edge Function URL
 const EDGE_FUNCTION_URL = "https://qnrnhncmfhcsktkhekzx.supabase.co/functions/v1/generate-soul-country";
 
+// Use your Supabase anon key for the apikey header
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFucm5obmNtZmhjc2t0a2hla3p4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk4OTQ3NTksImV4cCI6MjA2NTQ3MDc1OX0.wutKw3m4VzwChl09M4tgCvhPMvbv9BN-hhy6l05AXpU";
+
 const Result = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -37,7 +40,8 @@ const Result = () => {
           const res = await fetch(EDGE_FUNCTION_URL, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
+              "apikey": SUPABASE_ANON_KEY,
             },
             body: JSON.stringify({ form }),
           });
@@ -51,7 +55,6 @@ const Result = () => {
           setDescription(data.description);
 
           // Save to Soulmap Journal (localStorage)
-          // Use quiz title if provided, else fallback
           const entry = {
             id: Date.now().toString(),
             title: form.quizTitle || "Soul Country Quiz",
