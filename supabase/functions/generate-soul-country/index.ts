@@ -18,14 +18,34 @@ serve(async (req) => {
   try {
     const { form } = await req.json();
 
-    // Compose prompt - updated to be easier to read and follow the new structure
-    const prompt = `You are a seasoned, soulful travel guide. Given the following quiz answers, suggest one (and only one) world country for the person's "soul country." 
+    // Compose prompt with very explicit output template and stricter style
+    const prompt = `Given the quiz answers below, recommend ONE world country as a person's "soul country." 
+Always format your response exactly like this (on separate lines):
 
-Format your response like this, on separate lines:
+<Country Name>
+<Short, vivid subheading of 1-2 lines.>
+<Paragraph 1 describing why this country fits them (simple, easy to read).>
+<Paragraph 2 (optional, more details, still clear and concrete).>
+<Paragraph 3 (optional, only if truly useful).>
 
-Country Name
+Make sure the COUNTRY NAME is on its own first line as a heading (no punctuation or extra words). 
+The SUBHEADING should be inviting, evocative, but concise — do NOT copy or combine with the country line.
+Keep the description practical, upbeat, and easy to read (not poetic, not abstract, not repetitive).
+Use short paragraphs, avoid repeating the country name, and avoid any awkward merging of heading and subheading.
+Write as if making a friendly, concrete travel recommendation to a curious reader.
 
-A creative, vivid, and inviting 2-3 paragraph explanation of why this country matches their energy right now. Write clearly, with structure and fresh details—more uplifting, less poetic—so it's really easy for someone to read, share, and feel inspired. Keep sentences concise and use simple language.
+If any answers are missing, use your best intuition.
+
+Sample format:
+---
+Italy
+
+A sun-drenched haven of timeless beauty and comfort.
+
+Italy offers gentle warmth, vibrant cities, and a landscape that soothes the senses. If you crave a slower pace, café culture, and the inspiring blend of history and modern joy, this country is ready to welcome your spirit.
+
+Find comfort in coastal towns, rolling vines, or the bustle of ancient streets. Whatever your emotional season, Italy’s caring energy invites you to rest, savor, and embrace new possibilities.
+---
 
 Here are the answers: 
 Craving: ${form.craving}
@@ -46,15 +66,35 @@ Place Type: ${form.place_type}
         messages: [
           {
             role: "system",
-            content: "Your job is to recommend a single country (as a heading on the first line), then provide a clear, organized, uplifting, and creative explanation (2-3 paragraphs) for your choice. Your explanations are easy to read and upbeat, rather than overly poetic or abstract. Always start with the country name as the first line title, followed by a blank line, then the rest."
+            content:
+`You are a soulful-but-clear travel expert. Your job is:
+- Always output exactly this structure:
+  1. Country Name (first line only)
+  2. Blank line.
+  3. Subheading (one or two simple, inviting lines, NOT merged with country name)
+  4. Blank line.
+  5. 1–3 short, friendly, concrete paragraphs with vivid but clear reasons.
+- The format must always be:
+CountryName
+<blank line>
+<subheading>
+<blank line>
+<paragraphs>
+- The country name should NOT be blended into the subheading. Never combine these or repeat words.
+- Write for easy reading and sharing.
+- Avoid cliches, over-poetic language, or run-on sentences.
+- Use concrete details and an inviting, energetic but clear style.
+- Never prepend, append, or merge the country name except as a separate heading.
+- No unnecessary repetition.
+`
           },
           {
             role: "user",
             content: prompt
           }
         ],
-        max_tokens: 400,
-        temperature: 0.82,
+        max_tokens: 500,
+        temperature: 0.75,
       }),
     });
 
@@ -67,15 +107,10 @@ Place Type: ${form.place_type}
     const data = await openAIRes.json();
     const resultText: string = data.choices?.[0]?.message?.content || "";
 
-    // Heuristics: extract first mentioned country
-    const match = resultText.match(/([A-Z][A-Za-z\s]+)[\:\,]/);
-    let guessedCountry = "";
-    if (match) {
-      guessedCountry = match[1].trim();
-    } else {
-      // fallback: first sentence's proper noun
-      guessedCountry = resultText.split(".")[0].match(/[A-Z][a-z]+/g)?.[0] ?? "";
-    }
+    // Heuristic: extract the first line as country, per new template
+    // Extract first non-empty, non-HTML tag line as the country name
+    const allLines = resultText.split("\n").map(l => l.trim()).filter(l => l);
+    let guessedCountry = allLines[0] || "";
 
     return new Response(
       JSON.stringify({ country: guessedCountry, description: resultText.trim() }),
