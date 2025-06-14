@@ -19,7 +19,7 @@ const CountryChaosQuizForm: React.FC = () => {
     if (step < QUESTIONS.length - 1) {
       setStep(step + 1);
     } else {
-      const res = tallyResults(nextAnswers); // Fix: Only pass one argument
+      const res = tallyResults(nextAnswers, Object.keys(COUNTRY_RESULTS));
       setResultKey(res);
       setComplete(true);
     }

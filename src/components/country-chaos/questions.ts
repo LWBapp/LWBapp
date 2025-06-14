@@ -1,57 +1,56 @@
 
-export const QUESTIONS = [
+export const QUESTIONS: {
+  question: string;
+  options: { label: string; value: string; countryKey: string }[];
+}[] = [
   {
-    question: "1. What moment makes you fall in love with life?",
+    question: "1. What does your inner chaos look like?",
     options: [
-      { label: "Watching rain hit cobblestones from a café window", value: "a", countryKey: "paris" },
-      { label: "A slow dance in the kitchen with someone new", value: "b", countryKey: "buenosaires" },
-      { label: "A sunrise walk with no destination", value: "c", countryKey: "kyoto" },
-      { label: "Cooking for people you love, barefoot and laughing", value: "d", countryKey: "barcelona" }
+      { label: "Loud, passionate, and colorful", value: "a", countryKey: "brazil" },
+      { label: "Quiet, mysterious, and intense", value: "b", countryKey: "iceland" },
+      { label: "Energetic, creative, ever-changing", value: "c", countryKey: "japan" },
+      { label: "Orderly, thoughtful, but with wild streaks", value: "d", countryKey: "switzerland" },
+      { label: "Dreamy, poetic, unpredictable", value: "e", countryKey: "ireland" },
     ],
   },
   {
-    question: "2. Pick your visual love language:",
+    question: "2. You’re at your messiest when:",
     options: [
-      { label: "Neon reflected in puddles at night", value: "a", countryKey: "paris" },
-      { label: "Sunlight streaming onto old wood floors", value: "b", countryKey: "buenosaires" },
-      { label: "Wildflowers in your hair", value: "c", countryKey: "kyoto" },
-      { label: "Painted tiles and flickering candlelight", value: "d", countryKey: "barcelona" }
+      { label: "Your feelings explode out of you", value: "a", countryKey: "brazil" },
+      { label: "You isolate & go cold", value: "b", countryKey: "iceland" },
+      { label: "You jump into new projects & leave a creative wake", value: "c", countryKey: "japan" },
+      { label: "You stress-clean or overthink everything", value: "d", countryKey: "switzerland" },
+      { label: "You write a poem/novel/manifesto in your head at 2am", value: "e", countryKey: "ireland" },
     ],
   },
   {
-    question: "3. What type of romance are you craving?",
+    question: "3. Your friends describe you as:",
     options: [
-      { label: "Bittersweet and poetic", value: "a", countryKey: "paris" },
-      { label: "Fiery and intoxicating", value: "b", countryKey: "buenosaires" },
-      { label: "Quiet and soul-deep", value: "c", countryKey: "kyoto" },
-      { label: "Spontaneous and full of color", value: "d", countryKey: "barcelona" }
+      { label: "Expressive, vibrant, funny", value: "a", countryKey: "brazil" },
+      { label: "Elusive, enigmatic, intriguing", value: "b", countryKey: "iceland" },
+      { label: "Inventive, quirky, surprising", value: "c", countryKey: "japan" },
+      { label: "Reliable, calm, with a playful secret side", value: "d", countryKey: "switzerland" },
+      { label: "Romantic, soulful, a little unhinged", value: "e", countryKey: "ireland" },
     ],
   },
   {
-    question: "4. What’s your self-love ritual?",
+    question: "4. A perfect day reinventing yourself is:",
     options: [
-      { label: "Journaling and wine", value: "a", countryKey: "paris" },
-      { label: "Dancing in front of the mirror", value: "b", countryKey: "buenosaires" },
-      { label: "Long silent walks", value: "c", countryKey: "kyoto" },
-      { label: "Feeding others something you made", value: "d", countryKey: "barcelona" }
+      { label: "Dancing until sunrise", value: "a", countryKey: "brazil" },
+      { label: "A solo hike, lost in thought", value: "b", countryKey: "iceland" },
+      { label: "Learning a new craft/art/skill", value: "c", countryKey: "japan" },
+      { label: "Planning a mini-adventure (with snacks packed)", value: "d", countryKey: "switzerland" },
+      { label: "Spontaneous road trip with friends and good music", value: "e", countryKey: "ireland" },
     ],
   },
   {
-    question: "5. Which scene feels most alive to you?",
+    question: "5. Your chaos superpower is:",
     options: [
-      { label: "A kiss under soft rain", value: "a", countryKey: "paris" },
-      { label: "Music echoing through cobbled streets", value: "b", countryKey: "buenosaires" },
-      { label: "A hidden garden with secrets", value: "c", countryKey: "kyoto" },
-      { label: "A rooftop party with laughter and wind", value: "d", countryKey: "barcelona" }
-    ],
-  },
-  {
-    question: "6. If your life were a movie, the title would be:",
-    options: [
-      { label: "The Art of Yearning", value: "a", countryKey: "paris" },
-      { label: "Tango in Moonlight", value: "b", countryKey: "buenosaires" },
-      { label: "Stillness, Then Fire", value: "c", countryKey: "kyoto" },
-      { label: "Sunlit Chaos", value: "d", countryKey: "barcelona" }
+      { label: "Joyful intensity", value: "a", countryKey: "brazil" },
+      { label: "Deep introspection", value: "b", countryKey: "iceland" },
+      { label: "Reinvention", value: "c", countryKey: "japan" },
+      { label: "Hidden passion, strong boundaries", value: "d", countryKey: "switzerland" },
+      { label: "Magnetic imagination", value: "e", countryKey: "ireland" },
     ],
   },
 ];
