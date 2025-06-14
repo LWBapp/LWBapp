@@ -1,3 +1,4 @@
+
 import React from "react";
 import QuizCard from "@/components/QuizCard";
 
@@ -57,7 +58,7 @@ const QuizLibrary = () => (
     <p className="text-lg text-gray-600 text-center max-w-md mb-8">
       Browse and explore soulful discovery quizzes. Tap a quiz to begin your next journey!
     </p>
-    <div className="w-full max-w-3xl grid gap-6 grid-cols-1 sm:grid-cols-2">
+    <div className="w-full max-w-4xl grid gap-6 grid-cols-1 sm:grid-cols-3">
       {quizzes.map((quiz) => (
         <QuizCard
           key={quiz.id}
@@ -71,3 +72,4 @@ const QuizLibrary = () => (
 );
 
 export default QuizLibrary;
+
