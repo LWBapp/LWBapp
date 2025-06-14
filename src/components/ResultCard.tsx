@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import SocialShareCard from "@/components/SocialShareCard";
 import { Download } from "lucide-react";
 import { toPng } from "html-to-image";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   country: string;
@@ -12,6 +13,7 @@ type Props = {
 
 export const ResultCard: React.FC<Props> = ({ country, description }) => {
   const shareCardRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   // Download as PNG when user clicks button
   const downloadCard = async () => {
@@ -28,6 +30,10 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
         alert("Failed to generate image. Please try again!");
       }
     }
+  };
+
+  const handleFindAnother = () => {
+    navigate("/quiz");
   };
 
   return (
@@ -72,7 +78,18 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
         <Download size={22} />
         Download for Social Sharing
       </Button>
-      <div className="text-xs text-gray-400 text-center mt-2">Generates a beautiful PNG card for Instagram, Stories, and more.</div>
+      <div className="text-xs text-gray-400 text-center mt-2">
+        Generates a beautiful PNG card for Instagram, Stories, and more.
+      </div>
+      <Button
+        variant="outline"
+        className="mt-6 w-full py-3 rounded-full border-honey-dark text-honey-dark font-semibold text-md hover:bg-honey-light transition"
+        onClick={handleFindAnother}
+        size="lg"
+        type="button"
+      >
+        Find Another Country
+      </Button>
     </div>
   );
 };
