@@ -11,6 +11,7 @@ import { EmailModal } from "./EmailModal";
 import { toast } from "@/hooks/use-toast";
 import ShareButtons from "@/components/ShareButtons";
 import SoulCountryResult from "./SoulCountryResult";
+import AmbientBackground from "./AmbientBackground";
 
 type Props = {
   country: string;
@@ -36,6 +37,12 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
   // Email modal UI state
   const [emailModalOpen, setEmailModalOpen] = useState(false);
   const [sendingEmail, setSendingEmail] = useState(false);
+
+  // New parsing for archetype and soul quote for sharing
+  // Convention: description[0]=Archetype, description[1]=One-liner
+  const lines = description?.split("\n").map(l => l.trim()).filter(Boolean) ?? [];
+  const archetype = lines[0] || "";
+  const soulQuote = lines[1] || "";
 
   // Download Soulmap as PDF
   const handleDownloadPDF = async () => {
@@ -105,8 +112,8 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
     navigate("/quiz");
   };
 
-  // --- Add this teaser for sharing (can be customized or maybe made dynamic) ---
-  const teaser = "Where foggy cliffs meet quiet healing…";
+  // Update the teaser for sharing
+  const teaser = soulQuote || "My soul found its match…";
 
   // For this version, you can pass "fitBullets" manually or infer
   // Example: fitBullets for Portugal, otherwise leave empty
@@ -136,104 +143,108 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
   const safeCountry = country || "Your Country";
 
   return (
-    <div className="bg-white/95 rounded-2xl shadow-2xl border border-blush-peach px-8 py-14 flex flex-col items-center gap-6 animate-fadeIn">
-      {/* -- Soul Country Hero Output -- */}
-      <SoulCountryResult
-        country={safeCountry}
-        description={description}
-        fitBullets={fitBullets}
-        cta={cta}
-      />
-
-      {/* --- NEW: Social Sharing Buttons --- */}
-      <ShareButtons country={country} teaser={teaser} />
-
-      {/* Visually Hidden Card for Social Sharing */}
-      <div
-        style={{
-          position: "absolute",
-          top: "-10000px",
-          left: "-10000px",
-          width: 600,
-          height: 600,
-          pointerEvents: "none",
-          opacity: 0,
-        }}
-        aria-hidden="true"
-      >
-        <SocialShareCard
-          ref={shareCardRef}
-          country={country}
+    <div className="relative w-full">
+      {/* Ambient background visual */}
+      <AmbientBackground />
+      <div className="relative z-10 bg-white/90 rounded-2xl shadow-2xl border border-blush-peach px-8 py-14 flex flex-col items-center gap-6 animate-fadeIn">
+        {/* Soul Country Hero Output (with new poetic structure) */}
+        <SoulCountryResult
+          country={safeCountry}
           description={description}
+          cta={cta}
+        />
+
+        {/* --- NEW: Social Sharing Buttons --- */}
+        <ShareButtons country={country} teaser={teaser} />
+
+        {/* --- Shareable Story Card --- */}
+        <div
+          style={{
+            position: "absolute",
+            top: "-10000px",
+            left: "-10000px",
+            width: 600,
+            height: 600,
+            pointerEvents: "none",
+            opacity: 0,
+          }}
+          aria-hidden="true"
+        >
+          <SocialShareCard
+            ref={shareCardRef}
+            country={country}
+            description={archetype}
+            soulQuote={soulQuote}
+          />
+        </div>
+
+        {/* Visually Hidden Soulmap Card for PDF */}
+        <div
+          style={{
+            position: "absolute",
+            top: "-20000px",
+            left: "-20000px",
+            zIndex: -1,
+            opacity: 0,
+            pointerEvents: "none",
+          }}
+          aria-hidden="true"
+        >
+          <SoulmapCard
+            ref={soulmapRef}
+            name={userName}
+            quizTitle={quizTitle}
+            country={country}
+            description={description}
+            date={date}
+            quote={quote}
+          />
+        </div>
+
+        {/* SOULMAP UTILITIES SECTION */}
+        <div className="mt-7 w-full flex flex-col items-center">
+          <div className="text-xl font-playfair text-soul-purple font-bold mb-3 flex items-center gap-2">
+            <span role="img" aria-label="note">📝</span> Keep Your Soulmap
+          </div>
+          <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
+            <Button
+              onClick={handleDownloadPDF}
+              className="px-4 py-2 bg-cloud-blue text-charcoal-line rounded-full font-bold shadow transition flex items-center gap-2 justify-center hover:bg-peach-puff"
+              size="lg"
+            >
+              <Download size={18} /> Download as PDF
+            </Button>
+            <Button
+              onClick={() => setEmailModalOpen(true)}
+              className="px-4 py-2 bg-soul-purple text-white rounded-full font-bold shadow transition flex items-center gap-2 justify-center hover:bg-lavender-mist"
+              size="lg"
+            >
+              <Mail size={18} /> Email Me This Result
+            </Button>
+          </div>
+        </div>
+
+        <div className="text-xs text-charcoal-soft text-center mt-2">
+          Download or email yourself your soulmap as a beautiful keepsake.
+        </div>
+        <Button
+          variant="outline"
+          className="mt-6 w-full py-3 rounded-full border-soul-purple text-soul-purple font-semibold text-md hover:bg-peach-puff transition"
+          onClick={handleFindAnother}
+          size="lg"
+          type="button"
+        >
+          Find Another Country
+        </Button>
+
+        {/* Email Modal */}
+        <EmailModal
+          open={emailModalOpen}
+          onClose={() => setEmailModalOpen(false)}
+          onSend={handleSendEmail}
+          sending={sendingEmail}
         />
       </div>
-
-      {/* Visually Hidden Soulmap Card for PDF */}
-      <div
-        style={{
-          position: "absolute",
-          top: "-20000px",
-          left: "-20000px",
-          zIndex: -1,
-          opacity: 0,
-          pointerEvents: "none",
-        }}
-        aria-hidden="true"
-      >
-        <SoulmapCard
-          ref={soulmapRef}
-          name={userName}
-          quizTitle={quizTitle}
-          country={country}
-          description={description}
-          date={date}
-          quote={quote}
-        />
-      </div>
-
-      {/* SOULMAP UTILITIES SECTION */}
-      <div className="mt-7 w-full flex flex-col items-center">
-        <div className="text-xl font-playfair text-soul-purple font-bold mb-3 flex items-center gap-2">
-          <span role="img" aria-label="note">📝</span> Keep Your Soulmap
-        </div>
-        <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
-          <Button
-            onClick={handleDownloadPDF}
-            className="px-4 py-2 bg-cloud-blue text-charcoal-line rounded-full font-bold shadow transition flex items-center gap-2 justify-center hover:bg-peach-puff"
-            size="lg"
-          >
-            <Download size={18} /> Download as PDF
-          </Button>
-          <Button
-            onClick={() => setEmailModalOpen(true)}
-            className="px-4 py-2 bg-soul-purple text-white rounded-full font-bold shadow transition flex items-center gap-2 justify-center hover:bg-lavender-mist"
-            size="lg"
-          >
-            <Mail size={18} /> Email Me This Result
-          </Button>
-        </div>
-      </div>
-
-      <div className="text-xs text-charcoal-soft text-center mt-2">
-        Download or email yourself your soulmap as a beautiful keepsake.
-      </div>
-      <Button
-        variant="outline"
-        className="mt-6 w-full py-3 rounded-full border-soul-purple text-soul-purple font-semibold text-md hover:bg-peach-puff transition"
-        onClick={handleFindAnother}
-        size="lg"
-        type="button"
-      >
-        Find Another Country
-      </Button>
-
-      {/* Email Modal */}
-      <EmailModal
-        open={emailModalOpen}
-        onClose={() => setEmailModalOpen(false)}
-        onSend={handleSendEmail}
-        sending={sendingEmail}
-      />
     </div>
   );
 };
