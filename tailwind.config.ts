@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 export default {
   darkMode: ["class"],
@@ -85,7 +84,20 @@ export default {
           light: "#dcecf7",
           DEFAULT: "#67b4df",
           dark: "#255e89"
-        }
+        },
+        // Add Life Without Borders palette
+        blushPeach: "#fcd5ce",
+        softApricot: "#f9dcc4",
+        lavenderBlush: "#cdb4db",
+        deepCharcoal: "#2b2b2b",
+        charcoalBlack: "#333333",
+        smokySlate: "#5e5e5e",
+        soulPurple: "#7f4edb",
+        lavenderMist: "#b191f0",
+        coralPink: "#ffb4a2",
+        peachPuff: "#ffdab9",
+        cloudBlue: "#cce3f0",
+        mistySage: "#dcedc1",
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -117,6 +129,8 @@ export default {
       backgroundImage: {
         'soul-gradient':
           'linear-gradient(115deg, #eee9fb 0%, #fbeff2 33%, #FFF7D6 66%, #dcecf7 100%)',
+        'soul-bg-brand':
+          'linear-gradient(115deg, #fcd5ce 0%, #f9dcc4 40%, #cdb4db 100%)',
       }
     }
   },
