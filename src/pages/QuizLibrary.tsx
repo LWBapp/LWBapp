@@ -1,9 +1,13 @@
-
 import React from "react";
 import QuizCard from "@/components/QuizCard";
 
 // New set of quizzes with concepts & prompts
 const quizzes = [
+  {
+    title: "What Country Matches Your Chaos?",
+    subtitle: "Find out which wild destination mirrors your beautiful mess.",
+    link: "/quiz?type=chaos-country",
+  },
   {
     title: "Soul Country Mirror",
     subtitle: "Discover which country reflects your spirit’s landscape.",
@@ -76,4 +80,3 @@ const QuizLibrary = () => (
 );
 
 export default QuizLibrary;
-
