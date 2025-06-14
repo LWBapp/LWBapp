@@ -1,3 +1,4 @@
+
 import React from "react";
 import QuizCard from "@/components/QuizCard";
 
@@ -16,6 +17,11 @@ const quizzes = [
     id: "romantic-city",
     title: "Where Would You Fall Madly in Love (With Life)?",
     subtitle: "A dreamy, poetic quiz to reveal your cinematic life city.",
+  },
+  {
+    id: "delulu-destination",
+    title: "What’s Your Delulu Destination?",
+    subtitle: "Go viral with a fun, totally delusional lifestyle quiz.",
   },
   // Add more quizzes here as needed
 ];

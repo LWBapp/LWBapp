@@ -1,7 +1,9 @@
+
 import React from "react";
 import { useParams } from "react-router-dom";
 import CountryChaosQuizForm from "@/components/CountryChaosQuizForm";
 import RomanticCityQuizForm from "@/components/romantic-city/RomanticCityQuizForm";
+import DeluluDestinationQuizForm from "@/components/delulu-destination/DeluluDestinationQuizForm";
 
 const QUIZ_DATA: Record<
   string,
@@ -21,6 +23,11 @@ const QUIZ_DATA: Record<
     title: "Where Would You Fall Madly in Love (With Life)?",
     subtitle: "A dreamy, poetic quiz to reveal your cinematic life city.",
     description: "Let your heart daydream: where in the world would your story explode in color, romance, and wonder? Take the quiz and see your poetic match.",
+  },
+  "delulu-destination": {
+    title: "What’s Your Delulu Destination?",
+    subtitle: "Go viral with a fun, totally delusional lifestyle quiz.",
+    description: "Pick your delulu vibes and get a meme-worthy city + alter ego—because manifestation is a lifestyle.",
   },
   // Add more quizzes here matching the id in QuizLibrary!
 };
@@ -54,6 +61,10 @@ const QuizDetail: React.FC = () => {
           ) : quizId === "romantic-city" ? (
             <div className="w-full max-w-xl">
               <RomanticCityQuizForm />
+            </div>
+          ) : quizId === "delulu-destination" ? (
+            <div className="w-full max-w-xl">
+              <DeluluDestinationQuizForm />
             </div>
           ) : (
             <p className="italic text-gray-400">[Quiz content coming soon!]</p>
