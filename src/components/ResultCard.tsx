@@ -1,4 +1,3 @@
-
 import React, { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import SocialShareCard from "@/components/SocialShareCard";
@@ -10,6 +9,7 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { EmailModal } from "./EmailModal";
 import { toast } from "@/hooks/use-toast";
+import ShareButtons from "@/components/ShareButtons";
 
 type Props = {
   country: string;
@@ -104,6 +104,9 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
     navigate("/quiz");
   };
 
+  // --- Add this teaser for sharing (can be customized or maybe made dynamic) ---
+  const teaser = "Where foggy cliffs meet quiet healing…";
+
   return (
     <div className="bg-white/95 rounded-2xl shadow-2xl border border-honey-dark px-8 py-14 flex flex-col items-center gap-6 animate-fadeIn">
       <h2 className="text-3xl md:text-4xl font-playfair font-bold text-honey-dark mb-3 text-center">
@@ -117,6 +120,9 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
         )}
       </h2>
       <p className="text-lg text-gray-700 text-center whitespace-pre-line">{description}</p>
+
+      {/* --- NEW: Social Sharing Buttons --- */}
+      <ShareButtons country={country} teaser={teaser} />
 
       {/* Visually Hidden Card for Social Sharing */}
       <div
