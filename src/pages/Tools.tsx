@@ -1,11 +1,15 @@
 
 import React from "react";
-const Tools = () => (
-  <div className="min-h-screen flex flex-col items-center justify-center">
-    <h1 className="text-3xl font-playfair font-bold mb-4">Travel Tools</h1>
-    <p className="text-lg text-gray-600 text-center max-w-md">
-      Useful travel tools will appear here. (Coming soon!)
-    </p>
-  </div>
-);
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
+// Redirects to the new /tools directory page
+const Tools = () => {
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    navigate("/tools-directory", { replace: true });
+  }, [navigate]);
+  return null;
+};
+
 export default Tools;

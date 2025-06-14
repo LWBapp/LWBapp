@@ -9,7 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      soulful_tools: {
+        Row: {
+          affiliate_link: string | null
+          category: string | null
+          created_at: string | null
+          extra_notes: string | null
+          full_description: string | null
+          id: string
+          logo_url: string | null
+          name: string
+          offer_available: boolean | null
+          offer_text: string | null
+          short_description: string | null
+        }
+        Insert: {
+          affiliate_link?: string | null
+          category?: string | null
+          created_at?: string | null
+          extra_notes?: string | null
+          full_description?: string | null
+          id?: string
+          logo_url?: string | null
+          name: string
+          offer_available?: boolean | null
+          offer_text?: string | null
+          short_description?: string | null
+        }
+        Update: {
+          affiliate_link?: string | null
+          category?: string | null
+          created_at?: string | null
+          extra_notes?: string | null
+          full_description?: string | null
+          id?: string
+          logo_url?: string | null
+          name?: string
+          offer_available?: boolean | null
+          offer_text?: string | null
+          short_description?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
