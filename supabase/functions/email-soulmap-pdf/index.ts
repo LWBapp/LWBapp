@@ -1,6 +1,9 @@
 
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import jsPDF from "npm:jspdf@2.5.1";
+import jsPDFModule from "npm:jspdf@2.5.1";
+
+// Fix: get the jsPDF constructor correctly for Deno+npm:jspdf usage
+const jsPDF = jsPDFModule.jsPDF;
 
 // Get Loops API key from Supabase secret
 const LOOPS_API_KEY = Deno.env.get("email-soulmap-pdf");
@@ -102,3 +105,4 @@ serve(async (req: Request) => {
     );
   }
 });
+
