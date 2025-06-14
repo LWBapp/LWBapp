@@ -1,5 +1,6 @@
 
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
 
 /**
  * Log a completed quiz to Supabase
@@ -9,7 +10,7 @@ type LogQuizSubmissionParams = {
   quizTitle?: string;
   resultMain: string;
   resultDescription?: string;
-  rawAnswers?: object;
+  rawAnswers?: Json;
   userEmail?: string | null;
   ipAddress?: string;
 };
@@ -45,4 +46,3 @@ export async function logQuizSubmission({
     console.error("[Quiz Submission Logging Exception]", e);
   }
 }
-
