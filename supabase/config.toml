@@ -1,1 +1,5 @@
+
 project_id = "qnrnhncmfhcsktkhekzx"
+
+[functions.generate-soul-country]
+verify_jwt = false

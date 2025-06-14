@@ -1,16 +1,11 @@
-
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ResultCard } from "@/components/ResultCard";
 import { Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
-// Use GPT-4o to generate result
-const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
-
-function buildPrompt(form: any) {
-  return `You are a soulful travel guide who maps people's emotional seasons to the energy of countries. Your answers are poetic, intuitive, and emotionally resonant. Based on the following inputs: Craving: ${form.craving}, Feelings: ${form.feelings?.join(", ")}, Imagery: ${form.scenes?.join(", ")}, Emotional Season: ${form.emotional_season}, Place Type: ${form.place_type}, suggest one country that matches their emotional season and describe why, using poetic tone.`;
-}
+// Supabase Edge Function URL
+const EDGE_FUNCTION_URL = "https://qnrnhncmfhcsktkhekzx.supabase.co/functions/v1/generate-soul-country";
 
 const Result = () => {
   const location = useLocation();
@@ -29,70 +24,25 @@ const Result = () => {
     const fetchResult = async () => {
       setLoading(true);
       try {
-        // --- IMPORTANT: User must set their OpenAI key manually ---
-        const apiKey = localStorage.getItem("openai_api_key");
-        if (!apiKey) {
-          toast({
-            title: "Missing OpenAI Key",
-            description: (
-              <span>
-                You need to provide your OpenAI API key to get your Soul Country result.
-                <br />
-                <b>Go back and enter your key at the top right.</b>
-              </span>
-            ),
-            variant: "destructive",
-          });
-          setLoading(false);
-          return;
-        }
-
-        const prompt = buildPrompt(form);
-        const res = await fetch(OPENAI_API_URL, {
+        const res = await fetch(EDGE_FUNCTION_URL, {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${apiKey}`,
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({
-            model: "gpt-4o",
-            messages: [
-              {
-                role: "system",
-                content: "Be soulful, emotionally intuitive, and poetic. Suggest a single world country only, then explain why in a sensitive, evocative, beautiful way."
-              },
-              {
-                role: "user",
-                content: prompt
-              }
-            ],
-            max_tokens: 400,
-            temperature: 0.82
-          })
+          body: JSON.stringify({ form }),
         });
 
-        if (!res.ok) throw new Error("OpenAI response error.");
-        const data = await res.json();
-        // Extract: look for "Country: X" on first line, or infer
-        const resultText: string =
-          data.choices?.[0]?.message?.content || "";
-        // Heuristics: take first country referenced
-        const match = resultText.match(/([A-Z][A-Za-z\s]+)[\:\,]/);
-        let guessedCountry = "";
-        if (match) {
-          guessedCountry = match[1].trim();
-        } else {
-          // fallback: first sentence's proper noun
-          guessedCountry =
-            resultText.split(".")[0].match(/[A-Z][a-z]+/g)?.[0] ?? "";
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err?.error || "Edge function error.");
         }
-        setCountry(guessedCountry);
-        setDescription(resultText.trim());
+        const data = await res.json();
+        setCountry(data.country);
+        setDescription(data.description);
       } catch (e: any) {
         toast({
           title: "Something went wrong",
-          description:
-            "Could not generate your soul country. Please try again later.",
+          description: "Could not generate your soul country. Please try again later.",
           variant: "destructive"
         });
       } finally {
