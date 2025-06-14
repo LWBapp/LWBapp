@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Facebook, Twitter, Whatsapp, Share } from "lucide-react";
+import { Facebook, Twitter, MessageCircle, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // If you want to easily change these later:
@@ -101,7 +101,7 @@ export const ShareButtons: React.FC<ShareButtonsProps> = ({ country, teaser }) =
             size="sm"
             type="button"
           >
-            <Whatsapp size={18} /> WhatsApp
+            <MessageCircle size={18} /> WhatsApp
           </Button>
         </a>
         <Button
@@ -122,4 +122,3 @@ export const ShareButtons: React.FC<ShareButtonsProps> = ({ country, teaser }) =
 };
 
 export default ShareButtons;
-
