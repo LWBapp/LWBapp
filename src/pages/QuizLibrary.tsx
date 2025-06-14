@@ -1,3 +1,4 @@
+
 import React from "react";
 import QuizCard from "@/components/QuizCard";
 
@@ -27,7 +28,11 @@ const quizzes = [
     title: "Which Global Vibe Matches Your Mood Music?",
     subtitle: "Aesthetic, vibey, emotional quiz: find your city-match by music.",
   },
-  // Add more quizzes here as needed
+  {
+    id: "mood-map",
+    title: "Your Instant Mood-to-City Map",
+    subtitle: "Pick your mood, meet your city! Direct, quirky, visual fast match.",
+  },
 ];
 
 const QuizLibrary = () => (
