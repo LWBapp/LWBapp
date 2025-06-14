@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ResultCard } from "@/components/ResultCard";
 import { Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { saveSoulmap } from "@/utils/soulmapStorage";
 
 // Supabase Edge Function URL
 const EDGE_FUNCTION_URL = "https://qnrnhncmfhcsktkhekzx.supabase.co/functions/v1/generate-soul-country";
@@ -14,6 +15,8 @@ const Result = () => {
   const [country, setCountry] = useState("");
   const [description, setDescription] = useState("");
   const form = location.state;
+  // Added: when coming from Journal, don't call AI function
+  const fromJournal = form?.fromJournal;
 
   useEffect(() => {
     if (!form) {
@@ -21,36 +24,55 @@ const Result = () => {
       return;
     }
 
-    const fetchResult = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(EDGE_FUNCTION_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ form }),
-        });
+    if (fromJournal) {
+      // Don't call Edge, just display result from journal
+      setCountry(form.country);
+      setDescription(form.description);
+      setLoading(false);
+    } else {
+      const fetchResult = async () => {
+        setLoading(true);
+        try {
+          const res = await fetch(EDGE_FUNCTION_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ form }),
+          });
 
-        if (!res.ok) {
-          const err = await res.json();
-          throw new Error(err?.error || "Edge function error.");
+          if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err?.error || "Edge function error.");
+          }
+          const data = await res.json();
+          setCountry(data.country);
+          setDescription(data.description);
+
+          // Save to Soulmap Journal (localStorage)
+          // Use quiz title if provided, else fallback
+          const entry = {
+            id: Date.now().toString(),
+            title: form.quizTitle || "Soul Country Quiz",
+            country: data.country,
+            description: data.description,
+            date: new Date().toISOString(),
+            // Optional: journalEntry (can be added later)
+          };
+          saveSoulmap(entry);
+        } catch (e: any) {
+          toast({
+            title: "Something went wrong",
+            description: "Could not generate your soul country. Please try again later.",
+            variant: "destructive"
+          });
+        } finally {
+          setLoading(false);
         }
-        const data = await res.json();
-        setCountry(data.country);
-        setDescription(data.description);
-      } catch (e: any) {
-        toast({
-          title: "Something went wrong",
-          description: "Could not generate your soul country. Please try again later.",
-          variant: "destructive"
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
 
-    fetchResult();
+      fetchResult();
+    }
     // eslint-disable-next-line
   }, []);
 

@@ -13,6 +13,7 @@ import QuizLibrary from "./pages/QuizLibrary";
 import Tools from "./pages/Tools";
 import SoulfulToolsDirectory from "@/pages/SoulfulToolsDirectory";
 import SoulfulToolDetail from "@/pages/SoulfulToolDetail";
+import SoulmapJournal from "@/pages/SoulmapJournal";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
             {/* new directory and detail routes */}
             <Route path="/tools-directory" element={<SoulfulToolsDirectory />} />
             <Route path="/tools/:id" element={<SoulfulToolDetail />} />
+            <Route path="/soulmap-journal" element={<SoulmapJournal />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
