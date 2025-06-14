@@ -1,6 +1,6 @@
-
 import React from "react";
 import { useParams } from "react-router-dom";
+import CountryChaosQuizForm from "@/components/CountryChaosQuizForm";
 
 const QUIZ_DATA: Record<
   string,
@@ -40,9 +40,14 @@ const QuizDetail: React.FC = () => {
         {quiz.description && (
           <p className="mb-8 text-gray-600">{quiz.description}</p>
         )}
-        {/* Replace with your quiz logic or embed QuizForm per quiz! */}
         <div className="w-full flex justify-center">
-          <p className="italic text-gray-400">[Quiz content coming soon!]</p>
+          {quizId === "country-chaos" ? (
+            <div className="w-full max-w-xl">
+              <CountryChaosQuizForm />
+            </div>
+          ) : (
+            <p className="italic text-gray-400">[Quiz content coming soon!]</p>
+          )}
         </div>
       </div>
     </div>
