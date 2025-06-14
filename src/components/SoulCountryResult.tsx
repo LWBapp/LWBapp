@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -54,17 +53,16 @@ export const SoulCountryResult: React.FC<SoulCountryResultProps> = ({
 
   return (
     <div className="w-full flex flex-col items-center gap-8">
-      {/* Main Hero Heading: COUNTRY */}
+
+      {/* --- Country Heading and Subheading --- */}
       <div className="text-4xl md:text-5xl font-playfair font-bold text-soul-purple drop-shadow-sm mb-2 text-center">
         {heading}
       </div>
-      {/* Subheading: 1–2 line summary */}
       {subheading && (
         <div className="text-lg md:text-xl text-peach-puff font-semibold mb-2 text-center leading-snug">
           {subheading}
         </div>
       )}
-      {/* Core Description */}
       {body && (
         <div className="max-w-xl text-base md:text-lg text-charcoal mt-2 text-center md:text-left whitespace-pre-line font-serif">
           {body}

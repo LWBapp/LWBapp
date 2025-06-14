@@ -15,9 +15,18 @@ import SoulCountryResult from "./SoulCountryResult";
 type Props = {
   country: string;
   description: string;
+  identity?: string;
+  traits?: string;
+  quote?: string;
 };
 
-export const ResultCard: React.FC<Props> = ({ country, description }) => {
+export const ResultCard: React.FC<Props> = ({
+  country,
+  description,
+  identity,
+  traits,
+  quote,
+}) => {
   const shareCardRef = useRef<HTMLDivElement>(null);
   const soulmapRef = useRef<HTMLDivElement>(null);
 
@@ -26,7 +35,7 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
   // New: state for the Soulmap info (in a real quiz, you'd probably get these from form/context)
   const [userName] = useState(""); // You can pull this from quiz state if available
   const quizTitle = "Soul Country Quiz";
-  const quote = "You’re in a season of becoming…";
+  const quoteText = "You’re in a season of becoming…";
   const date = new Date().toLocaleDateString(undefined, {
     year: "numeric",
     month: "long",
@@ -78,7 +87,7 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
           country,
           description,
           date,
-          quote,
+          quote: quoteText,
         }),
       });
       if (!response.ok) {
@@ -105,11 +114,7 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
     navigate("/quiz");
   };
 
-  // --- Add this teaser for sharing (can be customized or maybe made dynamic) ---
   const teaser = "Where foggy cliffs meet quiet healing…";
-
-  // For this version, you can pass "fitBullets" manually or infer
-  // Example: fitBullets for Portugal, otherwise leave empty
   let fitBullets: string[] = [];
   if (country.toLowerCase() === "portugal") {
     fitBullets = [
@@ -118,12 +123,9 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
       "You thrive around warm, grounded people.",
     ];
   }
-
-  // Optionally: A subtle CTA button
   const cta = {
     text: "Get My City Matches",
     onClick: () => {
-      // For demo, could open a not-yet-implemented modal or alert
       toast({
         title: "Coming soon!",
         description: `We'll send you soulful places to explore in ${country}.`,
@@ -132,11 +134,33 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
     }
   };
 
-  // Updated: always ensure heading shows valid country
   const safeCountry = country || "Your Country";
+
+  // --- New: Poetic identity section formatting ---
+  const showIdentity = identity || traits || quote;
 
   return (
     <div className="bg-white/95 rounded-2xl shadow-2xl border border-blush-peach px-8 py-14 flex flex-col items-center gap-6 animate-fadeIn">
+
+      {/* --- New: Poetic Identity at the very top --- */}
+      {showIdentity && (
+        <div className="w-full flex flex-col items-center mb-3 max-w-xl animate-fadeIn">
+          {identity && (
+            <div className="text-2xl md:text-3xl font-playfair font-extrabold text-soul-purple mb-1 text-center drop-shadow">
+              {identity}
+            </div>
+          )}
+          {traits && (
+            <div className="text-lg md:text-xl text-peach-puff font-semibold mb-1 text-center tracking-wide">
+              {traits}
+            </div>
+          )}
+          {quote && (
+            <div className="italic text-md md:text-lg text-charcoal-soft text-center mb-1">&quot;{quote}&quot;</div>
+          )}
+        </div>
+      )}
+
       {/* -- Soul Country Hero Output -- */}
       <SoulCountryResult
         country={safeCountry}
@@ -187,7 +211,7 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
           country={country}
           description={description}
           date={date}
-          quote={quote}
+          quote={quoteText}
         />
       </div>
 
