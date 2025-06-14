@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import CountryChaosQuizForm from "@/components/CountryChaosQuizForm";
+import RomanticCityQuizForm from "@/components/romantic-city/RomanticCityQuizForm";
 
 const QUIZ_DATA: Record<
   string,
@@ -15,6 +16,11 @@ const QUIZ_DATA: Record<
     title: "Introvert or Adventurer?",
     subtitle: "Discover your travel alter-ego with this snappy personality test.",
     description: "Is your soul craving a book by the fire or an offbeat adventure?",
+  },
+  "romantic-city": {
+    title: "Where Would You Fall Madly in Love (With Life)?",
+    subtitle: "A dreamy, poetic quiz to reveal your cinematic life city.",
+    description: "Let your heart daydream: where in the world would your story explode in color, romance, and wonder? Take the quiz and see your poetic match.",
   },
   // Add more quizzes here matching the id in QuizLibrary!
 };
@@ -44,6 +50,10 @@ const QuizDetail: React.FC = () => {
           {quizId === "country-chaos" ? (
             <div className="w-full max-w-xl">
               <CountryChaosQuizForm />
+            </div>
+          ) : quizId === "romantic-city" ? (
+            <div className="w-full max-w-xl">
+              <RomanticCityQuizForm />
             </div>
           ) : (
             <p className="italic text-gray-400">[Quiz content coming soon!]</p>
