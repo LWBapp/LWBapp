@@ -26,7 +26,7 @@ const Result = () => {
     }
 
     if (fromJournal) {
-      setCountry(form.country);
+      setCountry(form.country || "Your Country");
       setDescription(form.description);
       setLoading(false);
     } else {
@@ -66,7 +66,7 @@ const Result = () => {
             return;
           }
           const data = await res.json();
-          setCountry(data.country);
+          setCountry(data.country || "Your Country");
           setDescription(data.description);
 
           // Save to Soulmap Journal (localStorage)
@@ -126,7 +126,7 @@ const Result = () => {
             </p>
           </div>
         ) : (
-          <ResultCard country={country} description={description} />
+          <ResultCard country={country || "Your Country"} description={description} />
         )}
       </div>
     </div>

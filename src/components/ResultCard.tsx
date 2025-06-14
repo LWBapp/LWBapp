@@ -132,11 +132,14 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
     }
   };
 
+  // Updated: always ensure heading shows valid country
+  const safeCountry = country || "Your Country";
+
   return (
     <div className="bg-white/95 rounded-2xl shadow-2xl border border-blush-peach px-8 py-14 flex flex-col items-center gap-6 animate-fadeIn">
       {/* -- Soul Country Hero Output -- */}
       <SoulCountryResult
-        country={country}
+        country={safeCountry}
         description={description}
         fitBullets={fitBullets}
         cta={cta}
