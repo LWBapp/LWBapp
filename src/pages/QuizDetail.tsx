@@ -1,9 +1,9 @@
-
 import React from "react";
 import { useParams } from "react-router-dom";
 import CountryChaosQuizForm from "@/components/CountryChaosQuizForm";
 import RomanticCityQuizForm from "@/components/romantic-city/RomanticCityQuizForm";
 import DeluluDestinationQuizForm from "@/components/delulu-destination/DeluluDestinationQuizForm";
+import MusicVibeQuizForm from "@/components/music-vibe/MusicVibeQuizForm";
 
 const QUIZ_DATA: Record<
   string,
@@ -28,6 +28,11 @@ const QUIZ_DATA: Record<
     title: "What’s Your Delulu Destination?",
     subtitle: "Go viral with a fun, totally delusional lifestyle quiz.",
     description: "Pick your delulu vibes and get a meme-worthy city + alter ego—because manifestation is a lifestyle.",
+  },
+  "music-vibe": {
+    title: "Which Global Vibe Matches Your Mood Music?",
+    subtitle: "Aesthetic, emotional, travel-music personality quiz.",
+    description: "Which city truly fits your music energy? Pick your sounds, moods, and musical moments — we’ll find your city by vibe.",
   },
   // Add more quizzes here matching the id in QuizLibrary!
 };
@@ -65,6 +70,10 @@ const QuizDetail: React.FC = () => {
           ) : quizId === "delulu-destination" ? (
             <div className="w-full max-w-xl">
               <DeluluDestinationQuizForm />
+            </div>
+          ) : quizId === "music-vibe" ? (
+            <div className="w-full max-w-xl">
+              <MusicVibeQuizForm />
             </div>
           ) : (
             <p className="italic text-gray-400">[Quiz content coming soon!]</p>

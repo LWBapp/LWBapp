@@ -1,4 +1,3 @@
-
 import React from "react";
 import QuizCard from "@/components/QuizCard";
 
@@ -22,6 +21,11 @@ const quizzes = [
     id: "delulu-destination",
     title: "What’s Your Delulu Destination?",
     subtitle: "Go viral with a fun, totally delusional lifestyle quiz.",
+  },
+  {
+    id: "music-vibe",
+    title: "Which Global Vibe Matches Your Mood Music?",
+    subtitle: "Aesthetic, vibey, emotional quiz: find your city-match by music.",
   },
   // Add more quizzes here as needed
 ];
