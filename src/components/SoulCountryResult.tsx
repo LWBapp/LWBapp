@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
@@ -50,7 +49,7 @@ export const SoulCountryResult: React.FC<SoulCountryResultProps> = ({
       <div className="w-full flex flex-col items-center mt-2">
         <div className="flex items-center gap-2 text-soul-purple font-playfair font-semibold text-xl mb-3">
           <Sparkles className="text-coral-pink" size={22} />
-          Your Soul Travel Kit for <span>{country}</span>
+          Your Soul Travel Kit
         </div>
         <Button
           className="px-7 py-2 bg-cloud-blue text-soul-purple font-bold rounded-full shadow hover:bg-lavender-mist transition text-md"
@@ -69,4 +68,3 @@ export const SoulCountryResult: React.FC<SoulCountryResultProps> = ({
 };
 
 export default SoulCountryResult;
-
