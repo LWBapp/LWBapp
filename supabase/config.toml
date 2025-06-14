@@ -2,4 +2,7 @@
 project_id = "qnrnhncmfhcsktkhekzx"
 
 [functions.generate-soul-country]
+# keep as default (private)
+
+[functions.email-soulmap-pdf]
 verify_jwt = false
