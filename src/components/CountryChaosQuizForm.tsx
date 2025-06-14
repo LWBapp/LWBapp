@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -121,6 +120,8 @@ function tallyResults(answers: string[]): string {
   return topCountry;
 }
 
+import CountryChaosResultCard from "./CountryChaosResultCard";
+
 const CountryChaosQuizForm: React.FC = () => {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<string[]>(Array(QUESTIONS.length).fill(""));
@@ -128,14 +129,12 @@ const CountryChaosQuizForm: React.FC = () => {
   const [resultKey, setResultKey] = useState<string | null>(null);
 
   const handleOption = (qIndex: number, countryKey: string) => {
-    // Set answer, advance to next or finish
     const nextAnswers = [...answers];
     nextAnswers[qIndex] = countryKey;
     setAnswers(nextAnswers);
     if (qIndex < QUESTIONS.length - 1) {
       setStep(qIndex + 1);
     } else {
-      // Tally
       const res = tallyResults(nextAnswers);
       setResultKey(res);
       setComplete(true);
@@ -151,19 +150,16 @@ const CountryChaosQuizForm: React.FC = () => {
 
   if (complete && resultKey) {
     const { name, emoji, description, archetype, flavor } = COUNTRY_RESULTS[resultKey];
+    // Use new Result Card with share/email/download utilities
     return (
-      <Card className="w-full mx-auto p-8 flex flex-col items-center gap-4 shadow-lg animate-fadeIn">
-        <div className="text-7xl mb-2">{emoji}</div>
-        <div className="text-2xl md:text-3xl font-bold font-playfair text-soul-purple mb-1">
-          {name}
-        </div>
-        <div className="text-lg font-semibold text-pink-700 italic mb-2">{archetype}</div>
-        <div className="text-base text-charcoal mb-2 text-center">{description}</div>
-        <div className="text-sm text-honey-dark mb-3 italic">{flavor}</div>
-        <Button variant="outline" className="rounded-full mt-3" onClick={restart}>
-          Retake Quiz
-        </Button>
-      </Card>
+      <CountryChaosResultCard
+        country={name}
+        emoji={emoji}
+        description={description}
+        archetype={archetype}
+        flavor={flavor}
+        onRetake={restart}
+      />
     );
   }
 
@@ -220,4 +216,3 @@ const CountryChaosQuizForm: React.FC = () => {
 };
 
 export default CountryChaosQuizForm;
-
