@@ -2,6 +2,7 @@
 import React from "react";
 import { MOOD_MAP_RESULTS } from "./results";
 import { Button } from "@/components/ui/button";
+import QuizResultActions from "@/components/QuizResultActions";
 
 interface MoodMapResultCardProps {
   resultKey: string;
@@ -26,6 +27,12 @@ const MoodMapResultCard: React.FC<MoodMapResultCardProps> = ({
       ) : (
         <div className="text-gray-400 mb-6 italic">Loading your mood-matched city vibe...</div>
       )}
+      <QuizResultActions
+        title="Your Instant Mood-to-City Map"
+        resultMain={res.city}
+        description={aiResult || res.archetype}
+        shareTeaser={res.archetype}
+      />
       <Button variant="secondary" className="mt-4" onClick={onRetake}>
         Retake Quiz
       </Button>

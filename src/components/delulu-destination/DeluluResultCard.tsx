@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { DELULU_RESULTS } from "./results";
+import QuizResultActions from "@/components/QuizResultActions";
 
 interface DeluluResultCardProps {
   resultKey: string;
@@ -27,6 +28,12 @@ const DeluluResultCard: React.FC<DeluluResultCardProps> = ({
       ) : (
         <div className="text-gray-400 mb-6 italic">Loading your delulu lifestyle manifest...</div>
       )}
+      <QuizResultActions
+        title="What’s Your Delulu Destination?"
+        resultMain={res.city}
+        description={aiResult || res.archetype}
+        shareTeaser={res.archetype}
+      />
       <Button variant="secondary" className="mt-4" onClick={onRetake}>
         Retake Quiz
       </Button>

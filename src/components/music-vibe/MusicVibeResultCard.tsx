@@ -2,6 +2,7 @@
 import React from "react";
 import { MUSIC_VIBE_RESULTS } from "./results";
 import { Button } from "@/components/ui/button";
+import QuizResultActions from "@/components/QuizResultActions";
 
 interface MusicVibeResultCardProps {
   resultKey: string;
@@ -27,6 +28,12 @@ const MusicVibeResultCard: React.FC<MusicVibeResultCardProps> = ({
       ) : (
         <div className="text-gray-400 mb-6 italic">Loading your music-matched mood city...</div>
       )}
+      <QuizResultActions
+        title="Which Global Vibe Matches Your Mood Music?"
+        resultMain={res.city}
+        description={aiResult || res.description}
+        shareTeaser={res.archetype}
+      />
       <Button variant="secondary" className="mt-4" onClick={onRetake}>
         Retake Quiz
       </Button>

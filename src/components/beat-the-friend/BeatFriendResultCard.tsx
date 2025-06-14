@@ -2,6 +2,7 @@
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import QuizResultActions from "@/components/QuizResultActions";
 
 interface BeatFriendResultCardProps {
   score: number;
@@ -22,6 +23,8 @@ const BeatFriendResultCard: React.FC<BeatFriendResultCardProps> = ({
   city,
   onRetake,
 }) => {
+  const tagline = cityTaglines[city] || "Tag a friend to play!";
+
   return (
     <Card className="w-full shadow-xl">
       <CardHeader>
@@ -34,8 +37,14 @@ const BeatFriendResultCard: React.FC<BeatFriendResultCardProps> = ({
         <div className="mb-4 text-center text-2xl font-playfair">
           Matched City: <span className="text-soul-purple">{city}</span>
         </div>
-        <p className="mb-6 text-center text-charcoal-soft">{cityTaglines[city] || "Tag a friend to play!"}</p>
-        <div className="flex justify-center gap-2">
+        <p className="mb-6 text-center text-charcoal-soft">{tagline}</p>
+        <QuizResultActions
+          title="Beat Your Best Friend’s City Score"
+          resultMain={city}
+          description={tagline}
+          shareTeaser={`I scored ${score}!`}
+        />
+        <div className="flex justify-center gap-2 mt-4">
           <Button variant="secondary" onClick={onRetake}>
             Try Again
           </Button>

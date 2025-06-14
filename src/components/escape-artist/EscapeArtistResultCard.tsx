@@ -3,6 +3,7 @@ import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RESULT_DESCRIPTIONS, EscapeArtistResult } from "./results";
+import QuizResultActions from "@/components/QuizResultActions";
 
 interface Props {
   result: EscapeArtistResult;
@@ -27,6 +28,12 @@ const EscapeArtistResultCard: React.FC<Props> = ({ result, onRetake }) => {
           <strong>Destination</strong>: {r.destination}
         </div>
         <div className="mb-6 text-center text-charcoal">{r.description}</div>
+        <QuizResultActions
+          title="What Kind of Escape Artist Are You?"
+          resultMain={result}
+          description={r.archetype + " | " + r.destination + "\n" + r.description}
+          shareTeaser={r.archetype}
+        />
         <div className="flex justify-center">
           <Button variant="secondary" onClick={onRetake}>
             Try Again

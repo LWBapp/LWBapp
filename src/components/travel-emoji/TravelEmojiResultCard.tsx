@@ -2,6 +2,7 @@
 import React from "react";
 import { TRAVEL_EMOJI_RESULTS, TravelEmojiResultKey } from "./results";
 import { Button } from "@/components/ui/button";
+import QuizResultActions from "@/components/QuizResultActions";
 
 type Props = {
   resultKey: TravelEmojiResultKey;
@@ -23,6 +24,12 @@ const TravelEmojiResultCard: React.FC<Props> = ({
       <h2 className="font-bold text-2xl font-playfair mb-1 text-soul-purple">{result.city}</h2>
       <div className="mb-3 text-gray-500">Your emoji picks: <span className="font-bold">{emojiCombo}</span></div>
       <div className="text-charcoal text-lg mb-6">{result.explanation}</div>
+      <QuizResultActions
+        title="Which Travel Emoji = Your Next City?"
+        resultMain={result.city}
+        description={result.explanation}
+        shareTeaser={emojiCombo}
+      />
       <Button variant="secondary" className="mt-2" onClick={onRetake}>
         Retake Quiz
       </Button>

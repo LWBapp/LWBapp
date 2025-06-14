@@ -3,6 +3,7 @@ import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RESULT_DESCRIPTIONS, NervousSystemClimateResult } from "./results";
+import QuizResultActions from "@/components/QuizResultActions";
 
 interface NervousSystemClimateResultCardProps {
   result: NervousSystemClimateResult;
@@ -29,6 +30,12 @@ const NervousSystemClimateResultCard: React.FC<NervousSystemClimateResultCardPro
           <strong>Climate:</strong> {climate}
         </div>
         <div className="mb-6 text-center text-charcoal">{description}</div>
+        <QuizResultActions
+          title="What’s Your Nervous System’s Ideal Climate?"
+          resultMain={result}
+          description={archetype + " | " + climate + "\n" + description}
+          shareTeaser={archetype}
+        />
         <div className="flex justify-center">
           <Button variant="secondary" onClick={onRetake}>
             Try Again
