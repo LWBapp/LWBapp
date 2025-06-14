@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -104,20 +103,26 @@ const PEOPLE = [
 
 export const QuizForm: React.FC = () => {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors }, watch } =
-    useForm<FormValues>({
-      defaultValues: {
-        about_you: "",
-        energy_craving: "",
-        environment: "",
-        climate: "",
-        stimulation: "",
-        cultural_energy: "",
-        ideal_day: "",
-        structure_spontaneity: "",
-        people: "",
-      },
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setValue,
+    trigger,
+  } = useForm<FormValues>({
+    defaultValues: {
+      about_you: "",
+      energy_craving: "",
+      environment: "",
+      climate: "",
+      stimulation: "",
+      cultural_energy: "",
+      ideal_day: "",
+      structure_spontaneity: "",
+      people: "",
+    },
+  });
 
   const onSubmit = (data: FormValues) => {
     navigate("/result", { state: data });
@@ -204,25 +209,10 @@ export const QuizForm: React.FC = () => {
               type="button"
               key={env.value}
               tabIndex={0}
-              onClick={() =>
-                // Since this is required, clicking sets the radio value
-                (document.getElementsByName("environment")).forEach((el: any) => {
-                  if (el.value === env.value) el.checked = true;
-                }) ||
-                // Set form value for react-hook-form watcher
-                (typeof window !== "undefined" && document.activeElement?.blur(), 
-                  (document.activeElement as HTMLElement)?.blur?.(), 
-                  window.requestAnimationFrame(() =>
-                    window.dispatchEvent(new Event("input"))
-                  ),
-                  // Register the radio
-                  (document as any).activeElement?.focus?.())
-                ||
-                null ||
-                register("environment", { required: true }).onChange({
-                  target: { value: env.value },
-                })
-              }
+              onClick={() => {
+                setValue("environment", env.value, { shouldValidate: true });
+                trigger("environment");
+              }}
               className={`rounded-full px-5 py-2 border transition
                 ${environmentValue === env.value
                   ? "bg-lavender-dark text-white border-lavender-dark shadow-md"
@@ -236,7 +226,7 @@ export const QuizForm: React.FC = () => {
                 value={env.value}
                 {...register("environment", { required: true })}
                 checked={environmentValue === env.value}
-                onChange={() => {}}
+                readOnly
                 className="hidden"
                 aria-label={env.label}
               />
@@ -360,15 +350,10 @@ export const QuizForm: React.FC = () => {
               type="button"
               key={place}
               tabIndex={0}
-              onClick={() =>
-                // Set value for react-hook-form watcher
-                (document.getElementsByName("ideal_day")).forEach((el: any) => {
-                  if (el.value === place) el.checked = true;
-                }) ||
-                register("ideal_day", { required: true }).onChange({
-                  target: { value: place },
-                })
-              }
+              onClick={() => {
+                setValue("ideal_day", place, { shouldValidate: true });
+                trigger("ideal_day");
+              }}
               className={`rounded-full px-5 py-2 border transition
                 ${idealDayValue === place
                   ? "bg-peach-puff text-charcoal border-peach-puff shadow-md"
@@ -382,7 +367,7 @@ export const QuizForm: React.FC = () => {
                 value={place}
                 {...register("ideal_day", { required: true })}
                 checked={idealDayValue === place}
-                onChange={() => {}}
+                readOnly
                 className="hidden"
                 aria-label={place}
               />
