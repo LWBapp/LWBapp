@@ -1,3 +1,4 @@
+
 import React from "react";
 import QuizCard from "@/components/QuizCard";
 
@@ -37,6 +38,11 @@ const quizzes = [
     title: "Which Travel Emoji = Your Next City?",
     subtitle: "Pick emojis to match your mood—and see which destination it unlocks.",
   },
+  {
+    id: "beat-friend",
+    title: "Beat Your Best Friend’s City Score",
+    subtitle: "Compete for the highest city score! Get your total & matched city, then challenge a friend.",
+  },
 ];
 
 const QuizLibrary = () => (
@@ -59,3 +65,4 @@ const QuizLibrary = () => (
 );
 
 export default QuizLibrary;
+

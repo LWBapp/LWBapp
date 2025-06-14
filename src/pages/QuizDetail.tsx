@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useParams } from "react-router-dom";
 import CountryChaosQuizForm from "@/components/CountryChaosQuizForm";
@@ -6,6 +7,7 @@ import DeluluDestinationQuizForm from "@/components/delulu-destination/DeluluDes
 import MusicVibeQuizForm from "@/components/music-vibe/MusicVibeQuizForm";
 import MoodMapQuizForm from "@/components/mood-map/MoodMapQuizForm";
 import TravelEmojiQuizForm from "@/components/travel-emoji/TravelEmojiQuizForm";
+import BeatFriendQuizForm from "@/components/beat-the-friend/BeatFriendQuizForm";
 
 const QUIZ_DATA: Record<
   string,
@@ -45,6 +47,11 @@ const QUIZ_DATA: Record<
     title: "Which Travel Emoji = Your Next City?",
     subtitle: "Pick emojis to match your mood—and see which destination it unlocks.",
     description: "3 quick emoji picks = your travel energy in city form! Will you get Paris, Tokyo, Bali, or somewhere else? Pick brain, heart, and energy vibes to reveal your destination.",
+  },
+  "beat-friend": {
+    title: "Beat Your Best Friend’s City Score",
+    subtitle: "Compete for the highest city score! Get your total & matched city, then challenge a friend.",
+    description: "Play this competitive city quiz! Answer 6 playful questions, find your score, see which city matches your vibes, and tag a friend to see who beats who.",
   },
 };
 
@@ -94,6 +101,10 @@ const QuizDetail: React.FC = () => {
             <div className="w-full max-w-xl">
               <TravelEmojiQuizForm />
             </div>
+          ) : quizId === "beat-friend" ? (
+            <div className="w-full max-w-xl">
+              <BeatFriendQuizForm />
+            </div>
           ) : (
             <p className="italic text-gray-400">[Quiz content coming soon!]</p>
           )}
@@ -104,3 +115,4 @@ const QuizDetail: React.FC = () => {
 };
 
 export default QuizDetail;
+
