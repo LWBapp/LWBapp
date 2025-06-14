@@ -1,8 +1,11 @@
-
 import { Link } from "react-router-dom";
 import { Zap, Star, Check, WandSparkles } from "lucide-react";
+import React, { useState } from "react";
+import CreatorInviteModal from "@/components/CreatorInviteModal";
 
 const Index = () => {
+  const [inviteOpen, setInviteOpen] = useState(false);
+
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-lwb-primary-gradient">
       <div className="w-full max-w-2xl mx-auto px-6 py-20 flex flex-col items-center">
@@ -62,18 +65,22 @@ const Index = () => {
             <br />
             Craft your own <span className="font-semibold text-soul-purple">Soul Country Map</span> quiz with our locked template—designed for beautiful style and unique, emotional outcomes.
           </p>
-          <Link
-            to="#"
+          <button
             className="mt-2 px-7 py-3 bg-soul-purple text-white rounded-full font-bold shadow hover:bg-lavender-mist transition text-base"
             aria-label="Are you a creator? Build your own Soul Country Map for your followers."
+            onClick={() => setInviteOpen(true)}
+            type="button"
           >
             Are you a creator? Build your own Soul Country Map for your followers.
-          </Link>
+          </button>
         </div>
+        <CreatorInviteModal
+          open={inviteOpen}
+          onClose={() => setInviteOpen(false)}
+        />
       </div>
     </div>
   );
 };
 
 export default Index;
-
