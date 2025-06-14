@@ -106,42 +106,26 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
 
   // --- Add this teaser for sharing (can be customized or maybe made dynamic) ---
   const teaser = "Where foggy cliffs meet quiet healing…";
-  const subheading = "In this land, you find:";
 
   return (
-    <div className="bg-white/90 rounded-2xl shadow-2xl border border-blushPeach px-6 py-12 md:px-10 md:py-16 flex flex-col items-center gap-6 animate-fadeIn"
-      style={{
-        background: "linear-gradient(115deg, #fcd5ce 0%, #f9dcc4 40%, #cdb4db 100%)",
-        borderColor: "#fcd5ce"
-      }}
-    >
-      <div className="w-full flex flex-col items-center mb-3">
-        <div className="text-xl md:text-2xl font-playfair font-bold text-soulPurple text-center mb-1 tracking-tight"
-          style={{ color: "#7f4edb" }}
-        >
-          Your Soul Country:
-        </div>
-        <div className="text-3xl md:text-5xl font-playfair font-bold italic text-deepCharcoal text-center mb-3"
-          style={{ color: "#2b2b2b", textShadow: "0 1px 0 #b191f0" }}
-        >
-          {country}
-        </div>
-        <div className="text-lg text-soulPurple font-semibold text-center mb-1"
-          style={{ color: "#7f4edb" }}
-        >
-          {subheading}
-        </div>
-        <div className="text-base text-charcoalBlack text-center whitespace-pre-line font-medium"
-          style={{ color: "#333333" }}
-        >
-          {description}
-        </div>
+    <div className="bg-white/95 rounded-2xl shadow-2xl border border-honey-dark px-8 py-14 flex flex-col items-center gap-6 animate-fadeIn">
+      {/* Country name in bold, description underneath */}
+      <div className="w-full text-center mb-4">
+        {country && (
+          <div className="text-3xl md:text-4xl font-playfair font-bold text-honey-dark mb-1">
+            {country}
+          </div>
+        )}
+        {description && (
+          <div className="text-lg text-gray-700 mt-2">
+            {description}
+          </div>
+        )}
       </div>
-
-      {/* Social Sharing Buttons */}
+      {/* --- NEW: Social Sharing Buttons --- */}
       <ShareButtons country={country} teaser={teaser} />
 
-      {/* Visually Hidden Share Card (no brand changes needed) */}
+      {/* Visually Hidden Card for Social Sharing */}
       <div
         style={{
           position: "absolute",
@@ -186,30 +170,20 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
 
       {/* SOULMAP UTILITIES SECTION */}
       <div className="mt-7 w-full flex flex-col items-center">
-        <div className="text-lg font-playfair text-soulPurple font-bold mb-3 flex items-center gap-2"
-          style={{ color: "#7f4edb" }}
-        >
+        <div className="text-xl font-playfair text-ocean-dark font-bold mb-3 flex items-center gap-2">
           <span role="img" aria-label="note">📝</span> Keep Your Soulmap
         </div>
         <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
           <Button
             onClick={handleDownloadPDF}
-            className="px-4 py-2 rounded-full font-bold shadow transition flex items-center gap-2 justify-center"
-            style={{
-              background: "#7f4edb",
-              color: "#fff"
-            }}
+            className="px-4 py-2 bg-ocean-dark text-white rounded-full font-bold shadow transition flex items-center gap-2 justify-center"
             size="lg"
           >
             <Download size={18} /> Download as PDF
           </Button>
           <Button
             onClick={() => setEmailModalOpen(true)}
-            className="px-4 py-2 rounded-full font-bold shadow transition flex items-center gap-2 justify-center"
-            style={{
-              background: "#ffb4a2",
-              color: "#2b2b2b"
-            }}
+            className="px-4 py-2 bg-honey-dark text-white rounded-full font-bold shadow transition flex items-center gap-2 justify-center"
             size="lg"
           >
             <Mail size={18} /> Email Me This Result
@@ -217,17 +191,12 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
         </div>
       </div>
 
-      <div className="text-xs text-smokySlate text-center mt-2"
-        style={{ color: "#5e5e5e" }}>
+      <div className="text-xs text-gray-400 text-center mt-2">
         Download or email yourself your soulmap as a beautiful keepsake.
       </div>
       <Button
         variant="outline"
-        className="mt-6 w-full py-3 rounded-full border-soulPurple font-semibold text-md transition"
-        style={{
-          borderColor: "#7f4edb",
-          color: "#7f4edb"
-        }}
+        className="mt-6 w-full py-3 rounded-full border-honey-dark text-honey-dark font-semibold text-md hover:bg-honey-light transition"
         onClick={handleFindAnother}
         size="lg"
         type="button"
@@ -245,5 +214,3 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
     </div>
   );
 };
-
-export default ResultCard;
