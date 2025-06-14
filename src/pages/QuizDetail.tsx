@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useParams } from "react-router-dom";
 import CountryChaosQuizForm from "@/components/CountryChaosQuizForm";
@@ -8,6 +7,7 @@ import MusicVibeQuizForm from "@/components/music-vibe/MusicVibeQuizForm";
 import MoodMapQuizForm from "@/components/mood-map/MoodMapQuizForm";
 import TravelEmojiQuizForm from "@/components/travel-emoji/TravelEmojiQuizForm";
 import BeatFriendQuizForm from "@/components/beat-the-friend/BeatFriendQuizForm";
+import NervousSystemClimateQuizForm from "@/components/nervous-system-climate/NervousSystemClimateQuizForm";
 
 const QUIZ_DATA: Record<
   string,
@@ -53,6 +53,12 @@ const QUIZ_DATA: Record<
     subtitle: "Compete for the highest city score! Get your total & matched city, then challenge a friend.",
     description: "Play this competitive city quiz! Answer 6 playful questions, find your score, see which city matches your vibes, and tag a friend to see who beats who.",
   },
+  "nervous-system-climate": {
+    title: "What’s Your Nervous System’s Ideal Climate?",
+    subtitle: "A soothing, restorative personality quiz to discover your wellness-supporting climate.",
+    description:
+      "Is your soul restored by gentle sunlight or misty mornings? Find which global climate helps your nervous system thrive — with a healing, sensory-focused match and archetype name.",
+  },
 };
 
 const QuizDetail: React.FC = () => {
@@ -80,6 +86,10 @@ const QuizDetail: React.FC = () => {
           {quizId === "country-chaos" ? (
             <div className="w-full max-w-xl">
               <CountryChaosQuizForm />
+            </div>
+          ) : quizId === "nervous-system-climate" ? (
+            <div className="w-full max-w-xl">
+              <NervousSystemClimateQuizForm />
             </div>
           ) : quizId === "romantic-city" ? (
             <div className="w-full max-w-xl">
@@ -115,4 +125,3 @@ const QuizDetail: React.FC = () => {
 };
 
 export default QuizDetail;
-

@@ -1,4 +1,3 @@
-
 import React from "react";
 import QuizCard from "@/components/QuizCard";
 
@@ -43,6 +42,12 @@ const quizzes = [
     title: "Beat Your Best Friend’s City Score",
     subtitle: "Compete for the highest city score! Get your total & matched city, then challenge a friend.",
   },
+  {
+    id: "nervous-system-climate",
+    title: "What’s Your Nervous System’s Ideal Climate?",
+    subtitle:
+      "A soothing, restorative personality quiz to discover your wellness-supporting climate.",
+  },
 ];
 
 const QuizLibrary = () => (
@@ -65,4 +70,3 @@ const QuizLibrary = () => (
 );
 
 export default QuizLibrary;
-
