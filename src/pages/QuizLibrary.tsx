@@ -48,6 +48,12 @@ const quizzes = [
     subtitle:
       "A soothing, restorative personality quiz to discover your wellness-supporting climate.",
   },
+  {
+    id: "escape-artist",
+    title: "What Kind of Escape Artist Are You?",
+    subtitle:
+      "Discover your psychological escapist archetype—and the destination that fits your secret urge to run.",
+  },
 ];
 
 const QuizLibrary = () => (

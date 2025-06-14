@@ -8,6 +8,7 @@ import MoodMapQuizForm from "@/components/mood-map/MoodMapQuizForm";
 import TravelEmojiQuizForm from "@/components/travel-emoji/TravelEmojiQuizForm";
 import BeatFriendQuizForm from "@/components/beat-the-friend/BeatFriendQuizForm";
 import NervousSystemClimateQuizForm from "@/components/nervous-system-climate/NervousSystemClimateQuizForm";
+import EscapeArtistQuizForm from "@/components/escape-artist/EscapeArtistQuizForm";
 
 const QUIZ_DATA: Record<
   string,
@@ -58,6 +59,13 @@ const QUIZ_DATA: Record<
     subtitle: "A soothing, restorative personality quiz to discover your wellness-supporting climate.",
     description:
       "Is your soul restored by gentle sunlight or misty mornings? Find which global climate helps your nervous system thrive — with a healing, sensory-focused match and archetype name.",
+  },
+  "escape-artist": {
+    title: "What Kind of Escape Artist Are You?",
+    subtitle:
+      "Discover your psychological escapist archetype—and the destination that fits your secret urge to run.",
+    description:
+      "Take a playful, revealing quiz to discover your deepest motives for escape, and find the global spot that heals or stirs your soul.",
   },
 };
 
@@ -114,6 +122,10 @@ const QuizDetail: React.FC = () => {
           ) : quizId === "beat-friend" ? (
             <div className="w-full max-w-xl">
               <BeatFriendQuizForm />
+            </div>
+          ) : quizId === "escape-artist" ? (
+            <div className="w-full max-w-xl">
+              <EscapeArtistQuizForm />
             </div>
           ) : (
             <p className="italic text-gray-400">[Quiz content coming soon!]</p>
