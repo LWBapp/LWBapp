@@ -4,6 +4,16 @@ import { supabase } from "@/integrations/supabase/client";
 /**
  * Log a completed quiz to Supabase
  */
+type LogQuizSubmissionParams = {
+  quizType: string;
+  quizTitle?: string;
+  resultMain: string;
+  resultDescription?: string;
+  rawAnswers?: object;
+  userEmail?: string | null;
+  ipAddress?: string;
+};
+
 export async function logQuizSubmission({
   quizType,
   quizTitle,
@@ -12,26 +22,19 @@ export async function logQuizSubmission({
   rawAnswers,
   userEmail,
   ipAddress,
-}: {
-  quizType: string;
-  quizTitle?: string;
-  resultMain: string;
-  resultDescription?: string;
-  rawAnswers?: any;
-  userEmail?: string | null;
-  ipAddress?: string;
-}): Promise<void> {
+}: LogQuizSubmissionParams): Promise<void> {
   // Defensive: do not insert without main result or quiz type
   if (!quizType || !resultMain) return;
+
   try {
     const { error } = await supabase.from("quiz_submissions").insert({
       quiz_type: quizType,
-      quiz_title: quizTitle || null,
+      quiz_title: quizTitle ?? null,
       result_main: resultMain,
-      result_description: resultDescription || null,
-      raw_answers: rawAnswers ? JSON.stringify(rawAnswers) : null,
-      user_email: userEmail || null,
-      ip_address: ipAddress || null,
+      result_description: resultDescription ?? null,
+      raw_answers: rawAnswers ?? null,
+      user_email: userEmail ?? null,
+      ip_address: ipAddress ?? null,
     });
     if (error) {
       // Log error for debugging but don't throw
@@ -42,3 +45,4 @@ export async function logQuizSubmission({
     console.error("[Quiz Submission Logging Exception]", e);
   }
 }
+
