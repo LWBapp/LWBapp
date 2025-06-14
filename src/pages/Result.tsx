@@ -16,10 +16,6 @@ const Result = () => {
   const [loading, setLoading] = useState(true);
   const [country, setCountry] = useState("");
   const [description, setDescription] = useState("");
-  // New for poetic identity
-  const [identity, setIdentity] = useState<string | undefined>("");
-  const [traits, setTraits] = useState<string | undefined>("");
-  const [quote, setQuote] = useState<string | undefined>("");
   const form = location.state;
   const fromJournal = form?.fromJournal;
 
@@ -32,10 +28,6 @@ const Result = () => {
     if (fromJournal) {
       setCountry(form.country || "Your Country");
       setDescription(form.description);
-      // fallback: skip poetic identity if missing from journal
-      setIdentity(form.identity || "");
-      setTraits(form.traits || "");
-      setQuote(form.quote || "");
       setLoading(false);
     } else {
       const fetchResult = async () => {
@@ -51,6 +43,7 @@ const Result = () => {
             body: JSON.stringify({ form }),
           });
 
+          // If there's an error, try to show the exact message from the function
           if (!res.ok) {
             let errorMsg = "Edge function error.";
             let details = "";
@@ -58,8 +51,10 @@ const Result = () => {
               const err = await res.json();
               errorMsg = err?.error || errorMsg;
               details = err?.details || "";
+              // Log response for further debugging
               console.error("[Soul Country Function Error]", errorMsg, details);
             } catch {
+              // fallback
               errorMsg = res.statusText;
             }
             toast({
@@ -73,9 +68,6 @@ const Result = () => {
           const data = await res.json();
           setCountry(data.country || "Your Country");
           setDescription(data.description);
-          setIdentity(data.identity || "");
-          setTraits(data.traits || "");
-          setQuote(data.quote || "");
 
           // Save to Soulmap Journal (localStorage)
           const entry = {
@@ -83,28 +75,28 @@ const Result = () => {
             title: form.quizTitle || "Soul Country Quiz",
             country: data.country,
             description: data.description,
-            identity: data.identity,
-            traits: data.traits,
-            quote: data.quote,
             date: new Date().toISOString(),
           };
           saveSoulmap(entry);
 
-          // Log quiz submission to Supabase
+          // --------- Log quiz submission to Supabase ---------
           logQuizSubmission({
             quizType: "soul_country",
             quizTitle: form.quizTitle || "Soul Country Quiz",
             resultMain: data.country,
             resultDescription: data.description,
-            rawAnswers: form,
+            rawAnswers: form, // store full form submission as JSON
+            // Optionally: pass email/info if you know it (currently none)
           });
         } catch (e: any) {
+          // Surface network or code errors
           const msg = e?.message || "Could not generate your soul country. Please try again later.";
           toast({
             title: "Something went wrong",
             description: msg,
             variant: "destructive"
           });
+          // Log for debugging
           console.error("[Soul Country Fetch Exception]", e);
         } finally {
           setLoading(false);
@@ -134,16 +126,11 @@ const Result = () => {
             </p>
           </div>
         ) : (
-          <ResultCard
-            country={country || "Your Country"}
-            description={description}
-            identity={identity}
-            traits={traits}
-            quote={quote}
-          />
+          <ResultCard country={country || "Your Country"} description={description} />
         )}
       </div>
     </div>
   );
 };
+
 export default Result;

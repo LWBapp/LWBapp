@@ -12,36 +12,12 @@ import { toast } from "@/hooks/use-toast";
 import ShareButtons from "@/components/ShareButtons";
 import SoulCountryResult from "./SoulCountryResult";
 
-// Helper mapping for country → gradient/animation
-const countryBgMap: Record<string, string> = {
-  portugal: "bg-gradient-to-br from-[#fcd5ce] via-[#b191f0] to-[#2b2b2b] animate-fadeIn",
-  japan: "bg-gradient-to-br from-[#e6e8f9] via-[#fae1dd] to-[#afdedc] animate-fadeIn",
-  india: "bg-gradient-to-br from-[#ffe7b7] via-[#ffb997] to-[#b191f0] animate-fadeIn",
-  iceland: "bg-gradient-to-br from-[#cae9ff] via-[#ddefff] to-[#446fa6] animate-fadeIn",
-  brazil: "bg-gradient-to-br from-[#ffecc7] via-[#80d9ce] to-[#276749] animate-fadeIn",
-};
-
-function getBgClass(country: string) {
-  if (!country) return "bg-lwb-primary-gradient";
-  const key = country.toLowerCase().replace(/\s/g, "");
-  return countryBgMap[key] || "bg-lwb-primary-gradient";
-}
-
 type Props = {
   country: string;
   description: string;
-  identity?: string; // archetype title
-  traits?: string;   // one-liner
-  quote?: string;    // poetic paragraph
 };
 
-export const ResultCard: React.FC<Props> = ({
-  country,
-  description,
-  identity,
-  traits,
-  quote,
-}) => {
+export const ResultCard: React.FC<Props> = ({ country, description }) => {
   const shareCardRef = useRef<HTMLDivElement>(null);
   const soulmapRef = useRef<HTMLDivElement>(null);
 
@@ -50,7 +26,7 @@ export const ResultCard: React.FC<Props> = ({
   // New: state for the Soulmap info (in a real quiz, you'd probably get these from form/context)
   const [userName] = useState(""); // You can pull this from quiz state if available
   const quizTitle = "Soul Country Quiz";
-  const quoteText = "You’re in a season of becoming…";
+  const quote = "You’re in a season of becoming…";
   const date = new Date().toLocaleDateString(undefined, {
     year: "numeric",
     month: "long",
@@ -102,7 +78,7 @@ export const ResultCard: React.FC<Props> = ({
           country,
           description,
           date,
-          quote: quoteText,
+          quote,
         }),
       });
       if (!response.ok) {
@@ -129,7 +105,11 @@ export const ResultCard: React.FC<Props> = ({
     navigate("/quiz");
   };
 
+  // --- Add this teaser for sharing (can be customized or maybe made dynamic) ---
   const teaser = "Where foggy cliffs meet quiet healing…";
+
+  // For this version, you can pass "fitBullets" manually or infer
+  // Example: fitBullets for Portugal, otherwise leave empty
   let fitBullets: string[] = [];
   if (country.toLowerCase() === "portugal") {
     fitBullets = [
@@ -138,9 +118,12 @@ export const ResultCard: React.FC<Props> = ({
       "You thrive around warm, grounded people.",
     ];
   }
+
+  // Optionally: A subtle CTA button
   const cta = {
     text: "Get My City Matches",
     onClick: () => {
+      // For demo, could open a not-yet-implemented modal or alert
       toast({
         title: "Coming soon!",
         description: `We'll send you soulful places to explore in ${country}.`,
@@ -149,50 +132,23 @@ export const ResultCard: React.FC<Props> = ({
     }
   };
 
+  // Updated: always ensure heading shows valid country
   const safeCountry = country || "Your Country";
 
-  // Instagram Story Card info
-  // Let the SocialShareCard receive archetype and quote for display.
-  const archetype = identity ?? "";
-  const vibeQuote = quote ?? "";
-
-  // --- Begin main poetic layout ---
   return (
-    <div className={`relative min-w-full md:min-w-0 bg-white/80 rounded-2xl shadow-2xl border border-blush-peach px-0 md:px-8 py-14 flex flex-col items-center gap-6 animate-fadeIn overflow-hidden`}>
-      {/* Animated/subtle gradient background */}
-      <div
-        className={`absolute inset-0 -z-10 ${getBgClass(country)} opacity-60 animate-fadeIn`}
-        aria-hidden="true"
+    <div className="bg-white/95 rounded-2xl shadow-2xl border border-blush-peach px-8 py-14 flex flex-col items-center gap-6 animate-fadeIn">
+      {/* -- Soul Country Hero Output -- */}
+      <SoulCountryResult
+        country={safeCountry}
+        description={description}
+        fitBullets={fitBullets}
+        cta={cta}
       />
 
-      {/* Centerpiece: Archetype Title */}
-      {identity && (
-        <div className="w-full text-4xl md:text-5xl font-playfair font-extrabold text-soul-purple drop-shadow mb-2 text-center animate-fadeIn">
-          {identity}
-        </div>
-      )}
+      {/* --- NEW: Social Sharing Buttons --- */}
+      <ShareButtons country={country} teaser={teaser} />
 
-      {/* One-liner Soul Match */}
-      {traits && (
-        <div className="text-lg md:text-2xl text-peach-puff font-semibold mb-3 text-center leading-snug animate-fadeIn">
-          {traits}
-        </div>
-      )}
-
-      {/* Vivid Sensory Visualization Paragraph (quote or poetically-structured description) */}
-      {(quote || description) && (
-        <div className="max-w-xl text-lg md:text-xl text-charcoal font-serif text-center mt-2 mb-4 whitespace-pre-line animate-fadeIn">
-          {quote && (
-            <span className="italic block mb-2">“{quote}”</span>
-          )}
-          {/* If the OpenAI data has newlines, keep them. Otherwise, show a poetic block. */}
-          {description && (
-            <span>{description}</span>
-          )}
-        </div>
-      )}
-
-      {/* -- Instagram Story Style shareable card -- */}
+      {/* Visually Hidden Card for Social Sharing */}
       <div
         style={{
           position: "absolute",
@@ -207,68 +163,10 @@ export const ResultCard: React.FC<Props> = ({
       >
         <SocialShareCard
           ref={shareCardRef}
-          country={safeCountry}
-          description={vibeQuote}
-          archetype={archetype}
+          country={country}
+          description={description}
         />
       </div>
-
-      {/* Social share section */}
-      <ShareButtons country={country} teaser={vibeQuote || traits || "My soul country revealed..."} />
-
-      {/* Soul Travel Kit CTA */}
-      <div className="mt-10 w-full flex flex-col items-center animate-fadeIn">
-        <div className="text-xl md:text-2xl font-playfair font-bold text-soul-purple mb-3 flex items-center gap-2">
-          <span role="img" aria-label="suitcase">🧳</span>
-          Your Soul Travel Kit for <span className="ml-1 text-[1.2em] font-extrabold text-lavender-mist">{safeCountry}</span>
-        </div>
-        <div className="text-base md:text-lg text-charcoal-soft font-serif mb-4 max-w-lg text-center">
-          Gather essential tools, visa tips, and rituals to begin your journey.
-          {/* Can expand this text dynamically based on country in the future */}
-        </div>
-        <Button
-          onClick={() =>
-            window.open("https://nomadkit.co/country/" + encodeURIComponent(safeCountry), "_blank")
-          }
-          className="px-6 py-3 rounded-full bg-soul-purple text-white hover:bg-lavender-mist shadow font-semibold text-lg animate-scaleIn"
-          size="lg"
-          type="button"
-        >
-          Explore Soul Travel Kit
-        </Button>
-      </div>
-
-      {/* Findings, download, or email options */}
-      <div className="mt-10 w-full flex flex-col items-center">
-        <div className="text-sm text-charcoal-soft text-center mb-2 animate-fadeIn">
-          Download or email yourself your soulmap as a beautiful keepsake.
-        </div>
-        <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
-          <Button
-            onClick={handleDownloadPDF}
-            className="px-4 py-2 bg-cloud-blue text-charcoal-line rounded-full font-bold shadow transition flex items-center gap-2 justify-center hover:bg-peach-puff"
-            size="lg"
-          >
-            <Download size={18} /> Download as PDF
-          </Button>
-          <Button
-            onClick={() => setEmailModalOpen(true)}
-            className="px-4 py-2 bg-soul-purple text-white rounded-full font-bold shadow transition flex items-center gap-2 justify-center hover:bg-lavender-mist"
-            size="lg"
-          >
-            <Mail size={18} /> Email Me This Result
-          </Button>
-        </div>
-      </div>
-      <Button
-        variant="outline"
-        className="mt-6 w-full py-3 rounded-full border-soul-purple text-soul-purple font-semibold text-md hover:bg-peach-puff transition"
-        onClick={handleFindAnother}
-        size="lg"
-        type="button"
-      >
-        Find Another Country
-      </Button>
 
       {/* Visually Hidden Soulmap Card for PDF */}
       <div
@@ -289,9 +187,45 @@ export const ResultCard: React.FC<Props> = ({
           country={country}
           description={description}
           date={date}
-          quote={quoteText}
+          quote={quote}
         />
       </div>
+
+      {/* SOULMAP UTILITIES SECTION */}
+      <div className="mt-7 w-full flex flex-col items-center">
+        <div className="text-xl font-playfair text-soul-purple font-bold mb-3 flex items-center gap-2">
+          <span role="img" aria-label="note">📝</span> Keep Your Soulmap
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3 w-full justify-center">
+          <Button
+            onClick={handleDownloadPDF}
+            className="px-4 py-2 bg-cloud-blue text-charcoal-line rounded-full font-bold shadow transition flex items-center gap-2 justify-center hover:bg-peach-puff"
+            size="lg"
+          >
+            <Download size={18} /> Download as PDF
+          </Button>
+          <Button
+            onClick={() => setEmailModalOpen(true)}
+            className="px-4 py-2 bg-soul-purple text-white rounded-full font-bold shadow transition flex items-center gap-2 justify-center hover:bg-lavender-mist"
+            size="lg"
+          >
+            <Mail size={18} /> Email Me This Result
+          </Button>
+        </div>
+      </div>
+
+      <div className="text-xs text-charcoal-soft text-center mt-2">
+        Download or email yourself your soulmap as a beautiful keepsake.
+      </div>
+      <Button
+        variant="outline"
+        className="mt-6 w-full py-3 rounded-full border-soul-purple text-soul-purple font-semibold text-md hover:bg-peach-puff transition"
+        onClick={handleFindAnother}
+        size="lg"
+        type="button"
+      >
+        Find Another Country
+      </Button>
 
       {/* Email Modal */}
       <EmailModal
@@ -305,4 +239,3 @@ export const ResultCard: React.FC<Props> = ({
 };
 
 // The file is >200 lines. Consider refactoring this component into modular parts for better maintainability.
-export default ResultCard;
