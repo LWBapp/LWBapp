@@ -107,19 +107,26 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
   // --- Add this teaser for sharing (can be customized or maybe made dynamic) ---
   const teaser = "Where foggy cliffs meet quiet healing…";
 
+  // NEW SUBHEADING: Place your subheading here
+  const subheading = "In this land, you find:";
+
   return (
     <div className="bg-white/95 rounded-2xl shadow-2xl border border-honey-dark px-8 py-14 flex flex-col items-center gap-6 animate-fadeIn">
-      <h2 className="text-3xl md:text-4xl font-playfair font-bold text-honey-dark mb-3 text-center">
-        {country ? (
-          <>
-            <span className="block">Your Soul Country:</span>
-            <span className="italic text-blush-dark font-playfair">{country}</span>
-          </>
-        ) : (
-          <>Your Soul Country</>
-        )}
-      </h2>
-      <p className="text-lg text-gray-700 text-center whitespace-pre-line">{description}</p>
+      {/* Updated layout for result heading */}
+      <div className="w-full flex flex-col items-center mb-3">
+        <div className="text-2xl md:text-3xl font-playfair font-semibold text-honey-dark text-center mb-1">
+          Your Soul Country:
+        </div>
+        <div className="text-3xl md:text-4xl font-playfair font-bold italic text-blush-dark text-center mb-2">
+          {country}
+        </div>
+        <div className="text-lg text-ocean-dark font-semibold text-center mb-1">
+          {subheading}
+        </div>
+        <div className="text-md text-gray-700 text-center whitespace-pre-line">
+          {description}
+        </div>
+      </div>
 
       {/* --- NEW: Social Sharing Buttons --- */}
       <ShareButtons country={country} teaser={teaser} />
