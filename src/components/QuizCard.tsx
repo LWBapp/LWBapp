@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardHeader, CardFooter, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -25,4 +25,3 @@ const QuizCard: React.FC<QuizCardProps> = ({ title, subtitle, link }) => (
 );
 
 export default QuizCard;
-

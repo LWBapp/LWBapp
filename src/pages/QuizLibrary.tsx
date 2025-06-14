@@ -4,10 +4,16 @@ import QuizCard from "@/components/QuizCard";
 
 const quizzes = [
   {
+    id: "country-chaos",
     title: "What Country Matches Your Chaos?",
     subtitle: "A witty, self-deprecating personality quiz for beautifully unhinged souls.",
-    link: "/quiz",
   },
+  {
+    id: "introvert-vs-adventurer",
+    title: "Introvert or Adventurer?",
+    subtitle: "Discover your travel alter-ego with this snappy personality test.",
+  },
+  // Add more quizzes here as needed
 ];
 
 const QuizLibrary = () => (
@@ -19,10 +25,10 @@ const QuizLibrary = () => (
     <div className="w-full max-w-3xl grid gap-6 grid-cols-1 sm:grid-cols-2">
       {quizzes.map((quiz) => (
         <QuizCard
-          key={quiz.title}
+          key={quiz.id}
           title={quiz.title}
           subtitle={quiz.subtitle}
-          link={quiz.link}
+          link={`/quiz/${quiz.id}`}
         />
       ))}
     </div>
