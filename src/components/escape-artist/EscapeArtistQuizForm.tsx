@@ -5,13 +5,15 @@ import { getEscapeArtistResult } from "./tallyResult";
 import EscapeArtistResultCard from "./EscapeArtistResultCard";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import type { EscapeArtistResult } from "./results";
 
 const EscapeArtistQuizForm: React.FC = () => {
   const [answers, setAnswers] = useState<Array<EscapeArtistOption | null>>(
     Array(ESCAPE_ARTIST_QUESTIONS.length).fill(null)
   );
   const [showResult, setShowResult] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
+  // Update type here!
+  const [result, setResult] = useState<EscapeArtistResult | null>(null);
 
   const handleSelect = (qIdx: number, value: EscapeArtistOption) => {
     const updated = [...answers];
@@ -23,7 +25,6 @@ const EscapeArtistQuizForm: React.FC = () => {
     e.preventDefault();
     const completed = answers.every((a) => !!a);
     if (!completed) return;
-    // Type narrowing: answers as EscapeArtistOption[]
     const finalAnswers = answers as EscapeArtistOption[];
     const res = getEscapeArtistResult({ answers: finalAnswers });
     setResult(res);
