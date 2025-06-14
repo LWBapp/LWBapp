@@ -2,6 +2,7 @@
 import React from "react";
 import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 interface QuizCardProps {
   title: string;
@@ -17,10 +18,11 @@ const QuizCard: React.FC<QuizCardProps> = ({ title, subtitle, link }) => (
     </CardHeader>
     <CardFooter className="pt-2">
       <Button asChild className="w-full" variant="secondary">
-        <a href={link}>Take Quiz</a>
+        <Link to={link}>Take Quiz</Link>
       </Button>
     </CardFooter>
   </Card>
 );
 
 export default QuizCard;
+
