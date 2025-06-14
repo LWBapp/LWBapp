@@ -1,29 +1,39 @@
 
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, List, Search } from "lucide-react";
+import { Home, List, Search, Newspaper } from "lucide-react";
 
 const navLinks = [
   {
     label: "Home",
     to: "/",
-    icon: <Home size={18} />
+    icon: <Home size={18} />,
+    external: false,
   },
   {
     label: "Find My Country",
     to: "/quiz",
-    icon: <Search size={18} />
+    icon: <Search size={18} />,
+    external: false,
   },
   {
     label: "Explore Quizzes",
     to: "/library",
-    icon: <List size={18} />
+    icon: <List size={18} />,
+    external: false,
   },
   {
     label: "Travel Tools",
     to: "/tools",
-    icon: <List size={18} />
-  }
+    icon: <List size={18} />,
+    external: false,
+  },
+  {
+    label: "Blog",
+    to: "https://blog.lifewithoutboardsers.xyz",
+    icon: <Newspaper size={18} />,
+    external: true,
+  },
 ];
 
 const Navbar: React.FC = () => {
@@ -47,17 +57,32 @@ const Navbar: React.FC = () => {
         <ul className="flex gap-2 md:gap-4 items-center">
           {navLinks.map((link) => (
             <li key={link.label}>
-              <Link
-                to={link.to}
-                className={`flex items-center gap-1 px-4 py-2 rounded-full font-medium text-sm transition-colors ${
-                  pathname === link.to
-                    ? "bg-honey-dark text-gray-900"
-                    : "text-gray-700 hover:bg-honey-light"
-                }`}
-              >
-                {link.icon}
-                <span className="hidden sm:inline">{link.label}</span>
-              </Link>
+              {link.external ? (
+                <a
+                  href={link.to}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1 px-4 py-2 rounded-full font-medium text-sm transition-colors text-gray-700 hover:bg-honey-light"
+                  aria-label={link.label}
+                >
+                  {link.icon}
+                  <span className="hidden sm:inline">{link.label}</span>
+                  <span className="sr-only">(opens in new tab)</span>
+                </a>
+              ) : (
+                <Link
+                  to={link.to}
+                  className={`flex items-center gap-1 px-4 py-2 rounded-full font-medium text-sm transition-colors ${
+                    pathname === link.to
+                      ? "bg-honey-dark text-gray-900"
+                      : "text-gray-700 hover:bg-honey-light"
+                  }`}
+                  aria-label={link.label}
+                >
+                  {link.icon}
+                  <span className="hidden sm:inline">{link.label}</span>
+                </Link>
+              )}
             </li>
           ))}
         </ul>
