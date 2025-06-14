@@ -1,6 +1,9 @@
 
-import React from "react";
+import React, { useRef } from "react";
 import { Button } from "@/components/ui/button";
+import SocialShareCard from "@/components/SocialShareCard";
+import { Download } from "lucide-react";
+import { toPng } from "html-to-image";
 
 type Props = {
   country: string;
@@ -8,19 +11,23 @@ type Props = {
 };
 
 export const ResultCard: React.FC<Props> = ({ country, description }) => {
-  const downloadCard = () => {
-    const element = document.createElement("a");
-    const blob = new Blob(
-      [
-        `Life Without Borders\nSoul Country: ${country}\n\n${description}`
-      ],
-      { type: "text/plain" }
-    );
-    element.href = URL.createObjectURL(blob);
-    element.download = "soul-country.txt";
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+  const shareCardRef = useRef<HTMLDivElement>(null);
+
+  // Download as PNG when user clicks button
+  const downloadCard = async () => {
+    if (shareCardRef.current) {
+      try {
+        const dataUrl = await toPng(shareCardRef.current, { cacheBust: true });
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = "soul-country.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } catch (e) {
+        alert("Failed to generate image. Please try again!");
+      }
+    }
   };
 
   return (
@@ -36,13 +43,36 @@ export const ResultCard: React.FC<Props> = ({ country, description }) => {
         )}
       </h2>
       <p className="text-lg text-gray-700 text-center whitespace-pre-line">{description}</p>
+
+      {/* Visually Hidden Card for Download */}
+      <div
+        style={{
+          position: "absolute",
+          top: "-10000px",
+          left: "-10000px",
+          width: 600,
+          height: 600,
+          pointerEvents: "none",
+          opacity: 0,
+        }}
+        aria-hidden="true"
+      >
+        <SocialShareCard
+          ref={shareCardRef}
+          country={country}
+          description={description}
+        />
+      </div>
+
       <Button
         onClick={downloadCard}
-        className="mt-7 px-6 py-3 bg-ocean-dark text-white rounded-full font-bold shadow-lg text-md hover:bg-ocean transition duration-200"
+        className="mt-7 px-6 py-3 bg-ocean-dark text-white rounded-full font-bold shadow-lg text-md hover:bg-ocean transition duration-200 flex items-center gap-2"
         size="lg"
       >
-        Download My Soul Country Card
+        <Download size={22} />
+        Download for Social Sharing
       </Button>
+      <div className="text-xs text-gray-400 text-center mt-2">Generates a beautiful PNG card for Instagram, Stories, and more.</div>
     </div>
   );
 };
