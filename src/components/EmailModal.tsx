@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Dialog,
@@ -48,7 +47,6 @@ export const EmailModal: React.FC<EmailModalProps> = ({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent
         className="rounded-xl p-8 w-[360px]"
-        showCloseIcon={false} // We'll use our own X button for consistent placement
       >
         <DialogHeader className="flex flex-row justify-between items-start p-0 m-0">
           <DialogTitle asChild>
