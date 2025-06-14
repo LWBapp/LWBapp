@@ -9,6 +9,42 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      quiz_submissions: {
+        Row: {
+          created_at: string | null
+          id: string
+          ip_address: string | null
+          quiz_title: string | null
+          quiz_type: string
+          raw_answers: Json | null
+          result_description: string | null
+          result_main: string
+          user_email: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          quiz_title?: string | null
+          quiz_type: string
+          raw_answers?: Json | null
+          result_description?: string | null
+          result_main: string
+          user_email?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          ip_address?: string | null
+          quiz_title?: string | null
+          quiz_type?: string
+          raw_answers?: Json | null
+          result_description?: string | null
+          result_main?: string
+          user_email?: string | null
+        }
+        Relationships: []
+      }
       soulful_tools: {
         Row: {
           affiliate_link: string | null

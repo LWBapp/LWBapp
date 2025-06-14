@@ -1,10 +1,10 @@
-
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ResultCard } from "@/components/ResultCard";
 import { Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { saveSoulmap } from "@/utils/soulmapStorage";
+import { logQuizSubmission } from "@/utils/logQuizSubmission";
 
 // Supabase Edge Function URL
 const EDGE_FUNCTION_URL = "https://qnrnhncmfhcsktkhekzx.supabase.co/functions/v1/generate-soul-country";
@@ -78,6 +78,16 @@ const Result = () => {
             date: new Date().toISOString(),
           };
           saveSoulmap(entry);
+
+          // --------- Log quiz submission to Supabase ---------
+          logQuizSubmission({
+            quizType: "soul_country",
+            quizTitle: form.quizTitle || "Soul Country Quiz",
+            resultMain: data.country,
+            resultDescription: data.description,
+            rawAnswers: form, // store full form submission as JSON
+            // Optionally: pass email/info if you know it (currently none)
+          });
         } catch (e: any) {
           // Surface network or code errors
           const msg = e?.message || "Could not generate your soul country. Please try again later.";
